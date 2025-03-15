@@ -17,7 +17,7 @@ const Sandbox = () => {
         },
         id: Date.now(),
       };
-      
+
       if (item.isFromInventory) {
         setPlacedElements((prev) => [...prev, element]);
       }

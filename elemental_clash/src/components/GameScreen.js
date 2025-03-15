@@ -4,7 +4,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Inventory from './Inventory';
 import Sandbox from './Sandbox';
 
-// Sample initial elements - you can modify these as needed
+// Sample initial elements
 const initialElements = [
   { id: 1, name: 'Water' },
   { id: 2, name: 'Fire' },
