@@ -3,6 +3,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Inventory from './Inventory';
 import Sandbox from './Sandbox';
+import GameStateComponent from './GameStateComponent';
 
 // Sample initial elements - you can modify these as needed
 const initialElements = [
@@ -18,6 +19,7 @@ const GameScreen = () => {
       <div style={{ display: 'flex', height: '100vh' }}>
         <Inventory elements={initialElements} />
         <Sandbox />
+        <GameStateComponent />
       </div>
     </DndProvider>
   );
