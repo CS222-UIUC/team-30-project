@@ -5,7 +5,7 @@ import Inventory from './Inventory';
 import Sandbox from './Sandbox';
 import GameStateComponent from './GameStateComponent';
 
-// Sample initial elements - you can modify these as needed
+// Sample initial elements
 const initialElements = [
   { id: 1, name: 'Water' },
   { id: 2, name: 'Fire' },

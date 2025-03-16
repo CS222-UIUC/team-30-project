@@ -15,9 +15,21 @@ const DraggableElement = ({ element, isFromInventory }) => {
   }));
 
   return (
-    <div ref={drag}>
+    <button 
+      ref={drag}
+      style={{
+        border: '1px solid #000',
+        borderRadius: '10px',
+        backgroundColor: '#fff',
+        padding: '10px',
+        margin: '5px',
+        width: '100%',
+        cursor: 'pointer'
+      }}
+    >
       {element.name}
-    </div>
+      <img src={element.image} alt={element.name}/>
+    </button>
   );
 };
 

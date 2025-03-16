@@ -5,17 +5,22 @@ const Inventory = ({ elements }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
-    <div style={{ width: '200px' }}>
-      <h2>Inventory</h2>
-      <div>
+    <div style={{ width: '200px', textAlign: 'center' }}>
+      <h1>Inventory</h1>
+      {/* <div>
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="DATABASE SEARCH"
         />
-      </div>
-      <div>
+      </div> */}
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gap: '10px',
+        padding: '10px'
+      }}>
         {elements.map((element) => (
           <DraggableElement
             key={element.id}
