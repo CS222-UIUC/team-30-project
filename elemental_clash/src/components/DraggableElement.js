@@ -28,7 +28,7 @@ const DraggableElement = ({ element, isFromInventory }) => {
       }}
     >
       {element.name}
-      <img src={element.image} alt={element.name}/>
+      {/* <img src={element.image} alt={element.name}/> */}
     </button>
   );
 };

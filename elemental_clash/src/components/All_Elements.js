@@ -8,12 +8,6 @@ const SUPABASE_ANON_KEY = process.env.REACT_APP_SUPABASE_ANON_KEY
 // Create Supabase client
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-// CREATE TABLE elements ( Will create in the .env file once I have access
-//     element TEXT PRIMARY KEY, 
-//     parentOne TEXT DEFAULT NULL,
-//     parentTwo TEXT DEFAULT NULL
-// );
-
 function getElementProduct(parentOne, parentTwo){
     let element = getElementByParents(parentOne, parentTwo);
     let elementTwo = getElementByParents(parentTwo, parentOne);
@@ -37,16 +31,17 @@ function getElementProduct(parentOne, parentTwo){
 
 const getElementByParents = async (parentOne, parentTwo) => {
     const { data, error } = await supabase
-      .from('elements')
-      .select('element')
-      .eq('parentOne', parentOne)
-      .eq('parentTwo', parentTwo)
+      .from('elemental_combinations')
+      .select('element_result')
+      .eq('element_one', parentOne)
+      .eq('element_two', parentTwo)
       .single();
     
-    if(data.element == null){
+    if(data["element_result"] == null){
+        console.log("combination not in database");
         return null;
     }
-    return data.element;
+    return data["element_result"];
 };
 
 

@@ -14,6 +14,8 @@ const initialElements = [
 ];
 
 const GameScreen = () => {
+  const [elements, setElements] = React.useState(initialElements);
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div style={{ display: 'flex', height: '100vh' }}>
