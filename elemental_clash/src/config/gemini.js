@@ -2,7 +2,7 @@ const {
     GoogleGenerativeAI,
     HarmCategory,
     HarmBlockThreshold,
-  } = require("@google/generative-ai");
+  } = require("@google/generative-ai"); 
   const fs = require("node:fs");
   const mime = require("mime-types");
   
