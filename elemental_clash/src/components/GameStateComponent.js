@@ -11,10 +11,6 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 const GameStateComponent = () => {
   const [gameState, setGameState] = useState(0)
   const [showPopup, setShowPopup] = useState(false)
-  const [joinGameName, setJoinGameName] = useState('')
-  const [createGameName, setCreateGameName] = useState('')
-  const [currGameName, setCurrGameName] = useState('')
-  const [playerNumber, setPlayerNumber] = useState(0)
 
   useEffect(() => {
     //this is what we want to do when things change (right now there's just a popup)
