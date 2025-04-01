@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDrop } from 'react-dnd';
 import DraggableElement from './DraggableElement';
+import {dragWidth, dragHeight} from './DraggableElement';
 
 const Sandbox = () => {
   const [placedElements, setPlacedElements] = useState([]);
@@ -18,9 +19,29 @@ const Sandbox = () => {
         id: Date.now(),
       };
 
-      if (item.isFromInventory) {
-        setPlacedElements((prev) => [...prev, element]);
-      }
+      setPlacedElements((previousElements) => {
+        const overlappingElement = previousElements.find((closest) =>
+          element != closest && Math.abs(element.position.x - closest.position.x) < dragWidth && Math.abs(element.position.y - closest.position.y) < dragHeight
+        );
+
+        console.log(element.position.x, element.position.y);
+
+        if(overlappingElement){
+          console.log("***************");
+          console.log(overlappingElement.position.x, overlappingElement.position.y);
+          console.log("***************");
+          // return prev.filter(tempElement => tempElement.id !== overlappingElement.id);
+          return previousElements.map(tempElement => {
+            if (tempElement.id === overlappingElement.id) {
+              return element;
+            } 
+            else {
+              return tempElement;
+            }
+          });
+        }
+        return [...previousElements, element];
+      });
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),

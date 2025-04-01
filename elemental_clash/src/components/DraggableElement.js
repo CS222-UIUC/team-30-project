@@ -1,6 +1,10 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
 
+const dragWidth = 100;
+const dragHeight = 100;
+export {dragWidth, dragHeight};
+
 const DraggableElement = ({ element, isFromInventory }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'ELEMENT',
@@ -23,7 +27,10 @@ const DraggableElement = ({ element, isFromInventory }) => {
         backgroundColor: '#fff',
         padding: '10px',
         margin: '5px',
-        width: '100%',
+        // width: '100%',
+        // height: '100%',
+        width: (dragWidth + 'px'),
+        height: (dragHeight + 'px'),
         cursor: 'pointer'
       }}
     >
