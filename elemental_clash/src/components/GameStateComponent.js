@@ -117,6 +117,7 @@ const GameStateComponent = () => {
     }
   }
 
+
   //updates join game text box as user types
   const handleJoinGameNameChange = (event) => {
     setJoinGameName(event.target.value);
@@ -182,6 +183,15 @@ const GameStateComponent = () => {
     setCreateGameName(event.target.value);
   }
 
+  const handleEndGame = async () => {
+
+    console.log("Ending game");
+    const { error } = await supabase
+    .from('current_games')
+    .delete()
+    .eq('game_name', currGameName)
+  }
+
   //creates a new game and makes the user player 1
   const handleCreateGameNameSubmit = async () => {
     console.log('Creating a game');
@@ -223,8 +233,13 @@ const GameStateComponent = () => {
         <button onClick={handleJoinGameNameSubmit}> Join Game </button>
       </div>
       <button onClick={handleGameToggle}>
+        Toggle Game
+      </button>
+      {/* added */}
+      <button onClick={handleEndGame}> 
         End Game
       </button>
+      {/* added */}
 
       {showPopup && (
         <div style={{
