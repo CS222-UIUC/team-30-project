@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { createClient } from '@supabase/supabase-js'
+import run from '../config/gemini'
 
 // Your Supabase URL and anon key
 const SUPABASE_URL = process.env.REACT_APP_SUPABASE_URL
@@ -39,7 +40,26 @@ const getElementByParents = async (parentOne, parentTwo) => {
     
     if(data["element_result"] == null){
         console.log("combination not in database");
+        run(parentOne+parentTwo);
+
+        const { data, er } = await supabase
+            .rpc('get_row_count', { table_name_input: 'elemental_combinations' });
+
+        if (er) {
+            console.error('Error fetching column count:', error);
+        } else {
+            const rowCount = data; // this is your number
+            console.log('Number of columns:', rowCount);
+        }
+        
+        rowCount -= 1;
+
+
+        const { error } = await supabase
+            .from('elemental_combinations')
+            .insert({ id: rowCount,element_one: parentOne, element_two:  parentTwo, element_result: 'Gemini Generated Element' });
         return null;
+        
     }
     return data["element_result"];
 };

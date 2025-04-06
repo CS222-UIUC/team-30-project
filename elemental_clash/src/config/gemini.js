@@ -63,4 +63,4 @@ const {
     console.log(result.response.text());
   }
   
-  run(); 
+export default run; 
