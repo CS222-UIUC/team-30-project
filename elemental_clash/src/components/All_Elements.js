@@ -55,7 +55,6 @@ const getElementByParents = async (parentOne, parentTwo) => {
         rowCount -= 1;
 
 
-
         const { error } = await supabase
             .from('elemental_combinations')
             .insert({ id: rowCount,element_one: parentOne, element_two:  parentTwo, element_result: 'Gemini Generated Element' });
