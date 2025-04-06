@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { createClient } from '@supabase/supabase-js'
+import run from '../config/gemini'
 
 // Your Supabase URL and anon key
 const SUPABASE_URL = process.env.REACT_APP_SUPABASE_URL
@@ -39,7 +40,9 @@ const getElementByParents = async (parentOne, parentTwo) => {
     
     if(data["element_result"] == null){
         console.log("combination not in database");
+        run(parentOne+parentTwo);
         return null;
+        
     }
     return data["element_result"];
 };
