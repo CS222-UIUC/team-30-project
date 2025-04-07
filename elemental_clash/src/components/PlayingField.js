@@ -10,10 +10,6 @@ const PlayingField = ( { initElements } ) => {
     const elementRefs = useRef({});
     const [elements, setElements] = useState(initElements);
 
-    const handleClick = () => {
-        console.log("ASF");
-    };
-
     const checkCollision = useCallback((currElementId) => {
         const currRef = elementRefs.current[currElementId];
         if (!currRef) {
@@ -46,23 +42,37 @@ const PlayingField = ( { initElements } ) => {
         return null;
     }, []);
 
-    const handleDragStop = useCallback((id, finalPosition) => {
-        setElements(prevElements => 
-            prevElements.map(element =>
-                element.id === id ? {...element, x: finalPosition.x, y: finalPosition.y } : element
-            )
-        );
+    const handleDragStop = useCallback((id, startPos, finalPosition) => {
+        // const elemen = elements.find(ele => ele.id == id);
+        // if (!elemen) {
+        //     return;
+        // }
+        // if (startPos.x <= window.innerWidth*.3 && finalPosition.x > window.innerWidth*.3) {
+        //     console.log('inventory');
+        //     // setElements(prevElements => {prevElements.concat({id: `${ele.name}-${Date.now()}`, name:`${ele.name}`, x: finalPosition.x, y:finalPosition.y})})
+        //     const newElement = {id: `${elemen.name}-${Date.now()}`, name: `${elemen.name}`, x:elemen.x, y: elemen.y };
+        //     setElements(prevElements => 
+        //         prevElements.map(element =>
+        //             element.id === id ? {...element, x: finalPosition.x, y: finalPosition.y } : element
+        //         )
+        //         .concat(newElement)
+        //     );
+        //     return;
+        // }
 
         setTimeout(() => {
             const colliders = checkCollision(id);
             if (colliders) {
                 const [ele1Id, ele2Id] = colliders;
                 setElements(prevElements => {
-                    
-                    if (!prevElements.find(el => el.id == ele1Id) || !prevElements.find(el => el.id == ele2Id)) {
+                    const ele1 = prevElements.find(ele => ele.id == ele1Id);
+                    const ele2 = prevElements.find(ele => ele.id == ele2Id);
+                    if (!(ele1 || ele2)) {
                         return prevElements;
                     } else {
-                        return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({id: `${prevElements.find(el => el.id == ele1Id).name}-${prevElements.find(el => el.id == ele2Id).name}-${Date.now()}`, name:`${prevElements.find(el => el.id == ele1Id).name}-${prevElements.find(el => el.id == ele2Id).name}`, x: 0, y:0})
+                        // const new_element = getElementProduct(ele1.name, ele2.name);
+                        // return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({id: `${new_element}-${Date.now()}`, name:`${new_element}`, x: 0, y:0})
+                        return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({id: `${ele1.name}-${ele2.name}-${Date.now()}`, name:`${ele1.name}-${ele2.name}`, x: 0, y:0})
                     }
                 });
             }
@@ -71,7 +81,6 @@ const PlayingField = ( { initElements } ) => {
 
     return (
         <div>
-            <button onClick={handleClick}>Add Element</button>
             {elements.map((element) => (
                 <Element 
                 key = {element.id}

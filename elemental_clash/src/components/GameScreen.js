@@ -41,7 +41,6 @@ const GameScreen = () => {
       </Draggable>
       */
      <div>
-      <h3>Put inventory here!</h3>
       <PlayingField initElements={initialElements}/>
       <VerticalDivider />
      </div>

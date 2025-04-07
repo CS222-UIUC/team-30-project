@@ -28,7 +28,7 @@ const Element = forwardRef(( { text, id, onDragStop }, ref ) => {
         if (dragging) {
             setDragging(false);
             if (onDragStop) {
-                onDragStop(id, position);
+                onDragStop(id, startPos, position);
             }
         }
         console.log(`${text} was released`)
