@@ -54,7 +54,18 @@ const PlayingField = ( { initElements } ) => {
         );
 
         setTimeout(() => {
-            checkCollision(id);
+            const colliders = checkCollision(id);
+            if (colliders) {
+                const [ele1Id, ele2Id] = colliders;
+                setElements(prevElements => {
+                    
+                    if (!prevElements.find(el => el.id == ele1Id) || !prevElements.find(el => el.id == ele2Id)) {
+                        return prevElements;
+                    } else {
+                        return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({id: `${prevElements.find(el => el.id == ele1Id).name}-${prevElements.find(el => el.id == ele2Id).name}-${Date.now()}`, name:`${prevElements.find(el => el.id == ele1Id).name}-${prevElements.find(el => el.id == ele2Id).name}`, x: 0, y:0})
+                    }
+                });
+            }
         }, 0)
     }, [checkCollision]);
 
