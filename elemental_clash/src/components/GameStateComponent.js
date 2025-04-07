@@ -8,6 +8,30 @@ const SUPABASE_ANON_KEY = process.env.REACT_APP_SUPABASE_ANON_KEY
 // Create Supabase client
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
+
+
+const containsID = async (id) => {
+  const { data, error } = await supabase
+    .from('current_games')
+    .select('id')
+    .eq('id', id)
+    .single()
+  if(error){
+      return false;
+  }
+  return data !== null;
+}
+
+function generateFiveDigitCode(){
+  for(let num = 0; num < 100000; num++){
+      if(!containsID(num)){
+          return num;
+      }
+  }
+  return -1;
+}
+
+
 const GameStateComponent = () => {
   const [gameState, setGameState] = useState(0)
   const [showPopup, setShowPopup] = useState(false)
