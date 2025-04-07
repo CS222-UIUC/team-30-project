@@ -1,81 +1,80 @@
-import React, {useRef, useState, useEffect} from 'react';
-import Draggable from 'react-draggable';
+import React, {useRef, useState, useEffect, useCallback} from 'react';
 import Element from './Element'
 
 
 
 
 const PlayingField = ( { initElements } ) => {
-
-
-    const nodeRef = useRef(null);
+    
+    
+    const elementRefs = useRef({});
     const [elements, setElements] = useState(initElements);
 
     const handleClick = () => {
         console.log("ASF");
     };
 
-    const checkCollision = (element) => {
-        /** 
-        for (let element of elements) {
-            if (element.id !== id) {
-                const distance = Math.sqrt(Math.pow(newX - element.x, 2) + Math.pow(newY - element.y, 2));
-                if (distance < 50) {
-                    console.log(`collision between dragged ${elements[id-1].name} and ${element.name}`)
-                    return true;
+    const checkCollision = useCallback((currElementId) => {
+        const currRef = elementRefs.current[currElementId];
+        if (!currRef) {
+            console.log('ayo somethings broken in getting the DOM reference for checking collisions');
+            return null;
+        }
+
+        const currrect = currRef.getBoundingClientRect();
+        for (const otherId in elementRefs.current) {
+            if (otherId != currElementId) {
+                const otherRef = elementRefs.current[otherId];
+                if (otherRef) {
+                    const otherrect = otherRef.getBoundingClientRect();
+                    if (
+                        currrect.left < otherrect.right &&
+                        currrect.right > otherrect.left &&
+                        currrect.top < otherrect.bottom &&
+                        currrect.bottom > otherrect.top
+                    ) {
+                        console.log("WOOWEE WE GOT AN OVERLOP");
+                        return [currElementId, otherId]
+                    }
+
+                } else {
+                    console.log('ayo somethings broken in getting the DOM reference for checking collisions, but the second check');
+                    return null;
                 }
             }
         }
-        return false;
-        */
-    //     const rect = document.getElementById(`element-${element.id}`).getBoundingClientRect();
-    //     console.log(rect);
-    //    for (let curr of elements) {
-    //     if (curr !== element) {
-    //         const currrect = document.getElementById(`element-${curr.id}`).getBoundingClientRect();
-    //         if (
-    //             (rect.left < currrect.left && rect.right > currrect.left && rect.bottom > currrect.bottom && rect.top < currrect.bottom) ||
-    //             (rect.left < currrect.left && rect.right > currrect.left && rect.bottom > currrect.top && rect.top < currrect.top) ||
-    //             (rect.left < currrect.right && rect.right > currrect.right &&  rect.bottom > currrect.bottom && rect.top < currrect.bottom) ||
-    //             (rect.left < currrect.right && rect.right > currrect.right && rect.bottom > currrect.top && rect.top < currrect.top)
-    //         ) {
-    //             console.log("Darn");
-    //         }  else {
-    //             console.log("bozo");
-    //         }
-    //     }
-    //    }
-    };
+        return null;
+    }, []);
 
-    const handleDrag = (e, data, id) => {
-        const {x, y} = data;
-        if (checkCollision(elements[id-1])) {
-            console.log("collision!");
-        }
-
+    const handleDragStop = useCallback((id, finalPosition) => {
         setElements(prevElements => 
             prevElements.map(element =>
-                element.id === id ? { ...element, x, y } : element
+                element.id === id ? {...element, x: finalPosition.x, y: finalPosition.y } : element
             )
         );
-    };
+
+        setTimeout(() => {
+            checkCollision(id);
+        }, 0)
+    }, [checkCollision]);
 
     return (
         <div>
             <button onClick={handleClick}>Add Element</button>
             {elements.map((element) => (
-                <div id={`element-${element.id}`} style={{display: 'inline-block'}}>
-                    <Draggable 
-                        nodeRef={nodeRef}
-                        key={element.id}
-                        position={{x: element.x, y: element.y}}
-                        onDrag={(e, data) => handleDrag(e, data, element.id)}
-                    >
-                        <div ref={nodeRef}>
-                            <Element ref={nodeRef} text={element.name} />  
-                        </div>
-                    </Draggable>
-                </div>
+                <Element 
+                key = {element.id}
+                id={element.id}
+                text={element.name} 
+                onDragStop={handleDragStop}
+                ref={domNode => {
+                    if (domNode) {
+                        elementRefs.current[element.id] = domNode;
+                    } else {
+                        delete elementRefs.current[element.id];
+                    }
+                }}
+                />
             ))}
         </div>
     );
