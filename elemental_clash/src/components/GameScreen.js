@@ -4,8 +4,8 @@ import React, { useRef } from 'react';
 import Inventory from './Inventory';
 // import Sandbox from './Sandbox';
 // import GameStateComponent from './GameStateComponent';
-import Draggable from 'react-draggable';
-import { DraggableCore } from 'react-draggable';
+// import Draggable from 'react-draggable';
+// import { DraggableCore } from 'react-draggable';
 import Element from './Element'
 import VerticalDivider from './Divider';
 import PlayingField from './PlayingField';
