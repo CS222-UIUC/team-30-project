@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { createClient } from '@supabase/supabase-js'
+import Button from './Button/Button.js';
 
 // Your Supabase URL and anon key
 const SUPABASE_URL = process.env.REACT_APP_SUPABASE_URL
@@ -10,11 +11,11 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 
 
-const containsID = async (id) => {
+const containsID = async (gameName) => {
   const { data, error } = await supabase
     .from('current_games')
-    .select('id')
-    .eq('id', id)
+    .select('*')
+    .eq('game_name', gameName)
     .single()
   if(error){
       return false;
@@ -22,13 +23,46 @@ const containsID = async (id) => {
   return data !== null;
 }
 
-function generateFiveDigitCode(){
-  for(let num = 0; num < 100000; num++){
-      if(!containsID(num)){
-          return num;
-      }
+export async function generateFiveDigitCode(){
+  let listOfPossibleVals = [
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+    '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
+  ];
+
+  for(let i = 0; i < 100000; i++){ // Didn't want to put while true because just in case
+    let result = "";
+    for(let num = 0; num < 5; num++){
+      let index = Math.floor(Math.random() * 62);
+      result += listOfPossibleVals[index];
+    }
+    console.log(result);
+    if(!await containsID(result)){
+      return result;
+    }
   }
-  return -1;
+  return "-1";
+
+  /*
+  Code if we want no repeats in the Game Code
+
+  for(let i = 0; i < 10000; i++){
+    let indexToSwitch = len(listOfPossibleVals) - 1;
+    let result = "";
+    for(let num = 0; num < 5; num++){
+      let index = Math.floor(Math.random() * (62 - num));
+      result += listOfPossibleVals[index];
+      let temp = listOfPossibleVals[index];
+      listOfPossibleVals[index] = listOfPossibleVals[indexToSwitch];
+      listOfPossibleVals[indexToSwitch] = temp;
+      indexToSwitch--;
+    }
+    if(!containsID(result)){
+      return result;
+    } 
+  }
+  return "-1";
+  */
 }
 
 
@@ -220,11 +254,14 @@ const GameStateComponent = () => {
   const handleCreateGameNameSubmit = async () => {
     console.log('Creating a game');
 
+    const newName = await generateFiveDigitCode();
+    setCreateGameName(newName);
+
     //checks if game exists
     const { data, error } = await supabase
     .from('current_games')
     .select('*')
-    .eq('game_name', createGameName)
+    .eq('game_name', newName)
     .single()
 
     if (data != null) { //game already in table
@@ -232,14 +269,14 @@ const GameStateComponent = () => {
     } else {
       const { error } = await supabase
       .from('current_games')
-      .insert({ game_name: createGameName, player_1: 1})
+      .insert({ game_name: newName, player_1: 1})
 
       if (error != null) {
         console.log("Error creating a new game:");
         console.log(error);
       } else {
         setPlayerNumber(1);
-        setCurrGameName(createGameName);
+        setCurrGameName(newName);
       }
     }
   }
