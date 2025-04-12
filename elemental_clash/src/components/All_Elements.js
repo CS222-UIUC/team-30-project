@@ -57,7 +57,7 @@ const getElementByParents = async (parentOne, parentTwo) => {
             const { error } = await supabase
                 .from('elemental_combinations')
                 .insert({element_1: parentOne, element_2:  parentTwo, element_result: result});
-            return null;
+            return result;
             
         }
         console.log(data);

@@ -8,10 +8,11 @@ import getElementByParents from './components/All_Elements.js';
 
 
 function App() {
-  const handleButtonClick = () => {
+/*  const handleButtonClick = () => {
      console.log('Button clicked!');
-     getElementByParents("image", "wall");
+     getElementByParents("bomb", "baby");
   };
+  */
 
   /**
   return (
@@ -35,7 +36,7 @@ function App() {
   */
  return (
   <div className="App" style={{display: "flex", flexDirection: "row"}}>
-    {<Button style={{ marginLeft: '10px' }} text="Element" onClick={handleButtonClick} />}
+  {/*<Button style={{ marginLeft: '10px' }} text="Element" onClick={handleButtonClick} /> */}
     <div style={{flex: 2}}>
       <GameScreen />
     </div>

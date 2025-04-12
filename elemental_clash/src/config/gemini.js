@@ -28,7 +28,7 @@ const chatSession = model.startChat({
     {
       role: "user",
       parts: [{
-        text: "You are the mind behind a new AI powered version of Little Alchemy, a popular puzzle game. In this game, players combine various elements to create new items. Your input will be 2 items separated by a comma. You will output an item that you think best represents the combination of the 2 inputs. For example: input = mud,fire | output= brick"
+        text: "You are the mind behind a new AI powered version of Little Alchemy, a popular puzzle game. In this game, players combine various elements to create new items. Your input will be 2 items separated by a comma. You will output an item that you think best represents the combination of the 2 inputs, followed by an emoji that you think best fits the results. For example: input = mud,fire | output= brick🧱"
       }]
     }
   ],
