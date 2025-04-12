@@ -76,4 +76,6 @@ const getElementByParents = async (parentOne, parentTwo) => {
     }
 };
 
+export default getElementByParents;
+
 
