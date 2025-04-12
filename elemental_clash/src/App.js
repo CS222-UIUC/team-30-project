@@ -10,7 +10,7 @@ import getElementByParents from './components/All_Elements.js';
 function App() {
   const handleButtonClick = () => {
      console.log('Button clicked!');
-     getElementByParents("mom", "dad");
+     getElementByParents("image", "wall");
   };
 
   /**
