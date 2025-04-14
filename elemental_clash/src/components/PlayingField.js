@@ -1,5 +1,6 @@
 import React, {useRef, useState, useEffect, useCallback} from 'react';
 import Element from './Element'
+import { getElementProduct } from './All_Elements';
 
 
 
@@ -70,9 +71,30 @@ const PlayingField = ( { initElements } ) => {
                     if (!(ele1 || ele2)) {
                         return prevElements;
                     } else {
+                        //setIsLoading(true);  // Set loading to true before awaiting the promise
+                        getElementProduct(ele1.name, ele2.name).then(newElement => {
+                            setElements(prevElements => {
+                                //setIsLoading(false);  // Set loading to false after the promise resolves
+                                return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({
+                                    id: `${newElement}-${Date.now()}`,
+                                    name: newElement,
+                                    x: 0,
+                                    y: 0
+                                });
+                            });
+                        }).catch(error => {
+                            //setIsLoading(false);  // Set loading to false in case of an error
+                            console.error("Error while getting element product:", error);
+                        });
+                        return prevElements;
+                        
+                        
                         // const new_element = getElementProduct(ele1.name, ele2.name);
+                        // console.log("WHERE ARE UYOU");
+                        // console.log("new_element: " + new_element);
                         // return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({id: `${new_element}-${Date.now()}`, name:`${new_element}`, x: 0, y:0})
-                        return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({id: `${ele1.name}-${ele2.name}-${Date.now()}`, name:`${ele1.name}-${ele2.name}`, x: 0, y:0})
+                        
+                        //return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({id: `${ele1.name}-${ele2.name}-${Date.now()}`, name:`${ele1.name}-${ele2.name}`, x: 0, y:0})
                     }
                 });
             }
