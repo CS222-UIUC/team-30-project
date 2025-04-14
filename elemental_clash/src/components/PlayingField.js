@@ -1,5 +1,6 @@
 import React, {useRef, useState, useEffect, useCallback} from 'react';
 import Element from './Element'
+import getElementByParents from './All_Elements';
 
 
 
@@ -70,9 +71,9 @@ const PlayingField = ( { initElements } ) => {
                     if (!(ele1 || ele2)) {
                         return prevElements;
                     } else {
-                        // const new_element = getElementProduct(ele1.name, ele2.name);
-                        // return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({id: `${new_element}-${Date.now()}`, name:`${new_element}`, x: 0, y:0})
-                        return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({id: `${ele1.name}-${ele2.name}-${Date.now()}`, name:`${ele1.name}-${ele2.name}`, x: 0, y:0})
+                        const new_element = getElementByParents(ele1.name, ele2.name);
+                        return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({id: `${new_element}-${Date.now()}`, name:`${new_element}`, x: 0, y:0})
+                        //return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({id: `${ele1.name}-${ele2.name}-${Date.now()}`, name:`${ele1.name}-${ele2.name}`, x: 0, y:0})
                     }
                 });
             }

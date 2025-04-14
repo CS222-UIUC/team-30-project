@@ -47,7 +47,8 @@ const getElementByParents = async (parentOne, parentTwo) => {
 
         console.log("second log");
         console.log("parent 1: " + parentOne);
-        console.log("third log");
+        console.log("parent 1: " + parentTwo);
+        console.log("DATA: " + data);
         
         if(data == null){
             console.log("combination not in database");
