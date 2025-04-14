@@ -1,15 +1,18 @@
 import React from 'react';
 import './App.css';
 import GameScreen from './components/GameScreen';
-// import Button from './components/Button/Button.js'
+import Button from './components/Button/Button.js'
 import VerticalDivider from './components/Divider.js'
 import GameStateComponent from './components/GameStateComponent.js';
+import getElementByParents from './components/All_Elements.js';
 
 
 function App() {
-  // const handleButtonClick = () => {
-  //   console.log('Button clicked!');
-  // };
+/*  const handleButtonClick = () => {
+     console.log('Button clicked!');
+     getElementByParents("bomb", "baby");
+  };
+  */
 
   /**
   return (
@@ -33,6 +36,7 @@ function App() {
   */
  return (
   <div className="App" style={{display: "flex", flexDirection: "row"}}>
+  {/*<Button style={{ marginLeft: '10px' }} text="Element" onClick={handleButtonClick} /> */}
     <div style={{flex: 2}}>
       <GameScreen />
     </div>

@@ -37,43 +37,37 @@ export async function getElementProduct(parentOne, parentTwo){
 
 const getElementByParents = async (parentOne, parentTwo) => {
     try {
+        console.log("first log");
         const { data, error } = await supabase
         .from('elemental_combinations')
         .select('element_result')
-        .eq('element_one', parentOne)
-        .eq('element_two', parentTwo)
+        .eq('element_1', parentOne)
+        .eq('element_2', parentTwo)
         .single();
+
+        console.log("second log");
+        console.log("parent 1: " + parentOne);
+        console.log("third log");
         
-        if(data["element_result"] == null){
+        if(data == null){
             console.log("combination not in database");
-            run(parentOne+parentTwo);
-
-            let rowCount = 0; // this is your number
-
-            const { data, er } = await supabase
-                .rpc('get_row_count', { table_name_input: 'elemental_combinations' });
-
-            if (er) {
-                console.error('Error fetching column count:', error);
-            } else {
-                rowCount = data;
-                console.log('Number of columns:', rowCount);
-            }
-            
-            rowCount -= 1;
-
+            const result = await run(parentOne+"," +parentTwo);
+            console.log("and the result is.." + result);
 
             const { error } = await supabase
                 .from('elemental_combinations')
-                .insert({ id: rowCount,element_one: parentOne, element_two:  parentTwo, element_result: 'Gemini Generated Element' });
-            return null;
+                .insert({element_1: parentOne, element_2:  parentTwo, element_result: result});
+            return result;
             
         }
+        console.log(data);
         return data["element_result"];
     } catch (error) {
-        console.error("err");
+        console.error("fukin error");
         return "failed element";
     }
 };
+
+export default getElementByParents;
 
 
