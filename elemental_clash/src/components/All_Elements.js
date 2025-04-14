@@ -9,7 +9,7 @@ const SUPABASE_ANON_KEY = process.env.REACT_APP_SUPABASE_ANON_KEY
 // Create Supabase client
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-export async function getElementProduct(parentOne, parentTwo){
+export async function getElementProduct(parentOne, parentTwo) {
     try {
     let element = getElementByParents(parentOne, parentTwo);
     let elementTwo = getElementByParents(parentTwo, parentOne);
@@ -36,6 +36,9 @@ export async function getElementProduct(parentOne, parentTwo){
 }
 
 const getElementByParents = async (parentOne, parentTwo) => {
+    if (parentOne == null || parentTwo == null){
+        return null;
+    }
     try {
         console.log("first log");
         const { data, error } = await supabase
@@ -44,7 +47,7 @@ const getElementByParents = async (parentOne, parentTwo) => {
         .eq('element_1', parentOne)
         .eq('element_2', parentTwo)
         .single();
-
+        console.log("Result: ", data);
         console.log("second log");
         console.log("parent 1: " + parentOne);
         console.log("third log");
