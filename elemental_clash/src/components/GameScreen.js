@@ -14,10 +14,10 @@ import PlayingField from './PlayingField';
 // let DraggableCore = Draggable.DraggableCore;
 // Sample initial elements
 const initialElements = [
-  { id: 0, name: 'water 💧', x: 0, y: 0 },
-  { id: 1, name: 'fire 🔥', x: 0, y: 0 },
-  { id: 2, name: 'earth 🌍', x: 0, y: 0 },
-  { id: 3, name: 'air 🌬️', x: 0, y: 0 },
+  { id: 0, name: 'water 💧', position: {x: 0, y: 100} },
+  { id: 1, name: 'fire 🔥', position: {x: 0, y: 200} },
+  { id: 2, name: 'earth 🌍', position: {x: 0, y: 300} },
+  { id: 3, name: 'air 🌬️', position: {x: 0, y: 400} },
 ];
 
 
