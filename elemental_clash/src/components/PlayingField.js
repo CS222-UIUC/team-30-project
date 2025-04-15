@@ -9,7 +9,8 @@ const PlayingField = ( { initElements } ) => {
     
     
     const elementRefs = useRef({});
-    const [elements, setElements] = useState(initElements);
+    const [elements, setElements] = useState([]);
+    const [inventoryElements, setInventoryElements] = useState(initElements);
 
     const checkCollision = useCallback((currElementId) => {
         const currRef = elementRefs.current[currElementId];
@@ -43,26 +44,32 @@ const PlayingField = ( { initElements } ) => {
         return null;
     }, []);
 
-    const handleDragStop = useCallback((id, startPos, finalPosition) => {
-        // const elemen = elements.find(ele => ele.id == id);
-        // if (!elemen) {
-        //     return;
-        // }
-        // if (startPos.x <= window.innerWidth*.3 && finalPosition.x > window.innerWidth*.3) {
-        //     console.log('inventory');
-        //     // setElements(prevElements => {prevElements.concat({id: `${ele.name}-${Date.now()}`, name:`${ele.name}`, x: finalPosition.x, y:finalPosition.y})})
-        //     const newElement = {id: `${elemen.name}-${Date.now()}`, name: `${elemen.name}`, x:elemen.x, y: elemen.y };
-        //     setElements(prevElements => 
-        //         prevElements.map(element =>
-        //             element.id === id ? {...element, x: finalPosition.x, y: finalPosition.y } : element
-        //         )
-        //         .concat(newElement)
-        //     );
-        //     return;
-        // }
-
+    const handleDragStop = useCallback((id, startPos, finalPosition, inventory) => {
         setTimeout(() => {
-            const colliders = checkCollision(id);
+            let workingId = id;
+            console.log("WORKING ID 1: " + workingId);
+            // setTimeout( () => {
+                if (inventory) {
+                    const currRef = elementRefs.current[workingId];
+                    const rect = currRef.getBoundingClientRect();
+                    console.log(finalPosition.x);
+                    console.log(window.innerWidth*.3);
+                    if (finalPosition.x > window.innerWidth*.3) {
+                        console.log("INVENTORY GANG BUT OVER HERE");
+                        const newEle = inventoryElements.find(ele => ele.id == workingId);
+                        workingId = `${newEle.name}-${Date.now()}`;
+                        setElements(prevElements => {
+                            console.log(newEle.name)
+                            return prevElements.concat({id: workingId, name: newEle.name, position:{x: finalPosition.x, y: finalPosition.y}});
+                        });
+                        setElements(prevElements => prevElements.filter(element => element && element.name !== undefined));
+                    }
+                    console.log("INVENTORY GANG")
+                    console.log(finalPosition)
+                }
+            // }, 0);
+            console.log("WORKING ID 2: " + workingId);
+            const colliders = checkCollision(workingId);
             if (colliders) {
                 const [ele1Id, ele2Id] = colliders;
                 setElements(prevElements => {
@@ -78,8 +85,8 @@ const PlayingField = ( { initElements } ) => {
                                 return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({
                                     id: `${newElement}-${Date.now()}`,
                                     name: newElement,
-                                    x: 0,
-                                    y: 0
+                                    position: {x: 0,
+                                    y: 0}
                                 });
                             });
                         }).catch(error => {
@@ -103,21 +110,44 @@ const PlayingField = ( { initElements } ) => {
 
     return (
         <div>
-            {elements.map((element) => (
-                <Element 
-                key = {element.id}
-                id={element.id}
-                text={element.name} 
-                onDragStop={handleDragStop}
-                ref={domNode => {
-                    if (domNode) {
-                        elementRefs.current[element.id] = domNode;
-                    } else {
-                        delete elementRefs.current[element.id];
-                    }
-                }}
-                />
-            ))}
+            <div className = 'inventory'>
+                {inventoryElements.map((element) => (
+                        <Element 
+                        key = {element.id}
+                        id={element.id}
+                        text={element.name} 
+                        position = {element.position}
+                        onDragStop={handleDragStop}
+                        inventory = {true}
+                        ref={domNode => {
+                            if (domNode) {
+                                elementRefs.current[element.id] = domNode;
+                            } else {
+                                delete elementRefs.current[element.id];
+                            }
+                        }}
+                        />
+                    ))}
+            </div>
+            <div className = 'active'>
+                {elements.map((element) => (
+                    <Element 
+                    key = {element.id}
+                    id={element.id}
+                    text={element.name} 
+                    position = {element.position}
+                    onDragStop={handleDragStop}
+                    inventory = {false}
+                    ref={domNode => {
+                        if (domNode) {
+                            elementRefs.current[element.id] = domNode;
+                        } else {
+                            delete elementRefs.current[element.id];
+                        }
+                    }}
+                    />
+                ))}
+            </div>
         </div>
     );
 };

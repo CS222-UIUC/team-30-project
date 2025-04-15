@@ -1,40 +1,41 @@
 import React, {useState, useEffect, useCallback, forwardRef} from 'react';
 
-const Element = forwardRef(( { text, id, onDragStop }, ref ) => {
+const Element = forwardRef(( { text, id, position, onDragStop, inventory }, ref ) => {
     const [dragging, setDragging] = useState(false);
-    const [position, setPosition] = useState({x:0, y:0});
+    const [currentPosition, setCurrentPosition] = useState({x: position?.x || 0, y: position?.y || 0});
     const [startPos, setStartPos] = useState({x: 0, y: 0});
-    const [elementStartPos, setElementStartPos] = useState({x: 0, y: 0});
+    const [elementStartPos, setElementStartPos] = useState({x: position?.x || 0, y: position?.y || 0});
 
     const handleMouseMove = useCallback((event) => {
         if (dragging) {
             const dx = event.clientX - startPos.x;
             const dy = event.clientY - startPos.y;
-            setPosition({x: elementStartPos.x+dx, y: elementStartPos.y+dy});
+            setCurrentPosition({x: elementStartPos.x+dx, y: elementStartPos.y+dy});
         }
     }, [dragging, startPos, elementStartPos]);
 
     const handlePress = useCallback((event) => {
-        console.log(`${text} was pressed`)
         event.preventDefault();
-        setElementStartPos(position);
+        setElementStartPos(currentPosition);
         setStartPos({x: event.clientX, y: event.clientY});
         setDragging(true);
-        // setDragging(true);
         console.log(`it is ${dragging} that am dragging`)
-    }, [position]);
+    }, [currentPosition]);
 
     const handleRelease = useCallback(() => {
         if (dragging) {
             setDragging(false);
+            if (inventory) {
+                setCurrentPosition({x: elementStartPos.x, y: elementStartPos.y});
+            }
             if (onDragStop) {
-                onDragStop(id, startPos, position);
+                onDragStop(id, startPos, currentPosition, inventory);
             }
         }
         console.log(`${text} was released`)
         // setDragging(false);
         console.log(`it is ${dragging} that am dragging`)
-    }, [dragging, id, onDragStop, position]);
+    }, [dragging, id, onDragStop, currentPosition, inventory, elementStartPos, startPos]);
 
     useEffect(() => {
         if (dragging) {
@@ -47,10 +48,11 @@ const Element = forwardRef(( { text, id, onDragStop }, ref ) => {
             window.removeEventListener('mouseup', handleRelease);
         };
     }, [dragging, handleMouseMove, handleRelease]);
+
     const style = {
         position: 'absolute',
-        left: `${position.x}px`,
-        top: `${position.y}px`,
+        left: `${currentPosition.x}px`,
+        top: `${currentPosition.y}px`,
         display: 'inline-block',
         paddingTop: '1px',
         paddingBottom: '1px',
@@ -63,6 +65,7 @@ const Element = forwardRef(( { text, id, onDragStop }, ref ) => {
         color: '#333',
         fontSize: '16px',
         textAlign: 'center',
+        cursor: dragging ? 'grabbing' : 'grab',
     };
 
     return (
