@@ -80,6 +80,7 @@ const PlayingField = ( { initElements } ) => {
                         getElementProduct(ele1.name, ele2.name).then(newElement => {
                             setElements(prevElements => {
                                 //setIsLoading(false);  // Set loading to false after the promise resolves
+                                console.log("A", prevElements);
                                 return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({
                                     id: `${newElement}-${Date.now()}`,
                                     name: newElement,
@@ -88,11 +89,15 @@ const PlayingField = ( { initElements } ) => {
                                 });
                             });
 
-                            if (!inventoryElements.find(ele => ele.name == newElement)) {
-                                setInventoryElements(prevInventory => {
+                            setInventoryElements(prevInventory => {
+                                if (!prevInventory.find(ele => ele.name == newElement)) {
                                     return [...prevInventory, {id: `${newElement}-${Date.now()}`, name: newElement, position: {x: 0, y: 0}}];
-                                });
-                            }
+                                } else {
+                                    return prevInventory;
+                                }
+                            });
+                            console.log("OVER HERE", inventoryElements);
+
                             
                         }).catch(error => {
                             //setIsLoading(false);  // Set loading to false in case of an error
@@ -111,7 +116,7 @@ const PlayingField = ( { initElements } ) => {
                 });
             }
         }, 0)
-    }, [checkCollision]);
+    }, [checkCollision, elements, inventoryElements]);
 
     return (
         <div style={{ display: 'flex', height: '100vh', alignItems: 'flex-start' }}>
