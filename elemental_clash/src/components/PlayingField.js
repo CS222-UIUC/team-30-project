@@ -83,10 +83,17 @@ const PlayingField = ( { initElements } ) => {
                                 return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({
                                     id: `${newElement}-${Date.now()}`,
                                     name: newElement,
-                                    position: {x: 0,
-                                    y: 0}
+                                    position: {x: (finalPosition.x+finalPosition.x)/2,
+                                    y: (finalPosition.y+finalPosition.y)/2}
                                 });
                             });
+
+                            if (!inventoryElements.find(ele => ele.name == newElement)) {
+                                setInventoryElements(prevInventory => {
+                                    return [...prevInventory, {id: `${newElement}-${Date.now()}`, name: newElement, position: {x: 0, y: 0}}];
+                                });
+                            }
+                            
                         }).catch(error => {
                             //setIsLoading(false);  // Set loading to false in case of an error
                             console.error("Error while getting element product:", error);
