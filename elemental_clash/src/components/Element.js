@@ -16,11 +16,15 @@ const Element = forwardRef(( { text, id, position, onDragStop, inventory }, ref 
 
     const handlePress = useCallback((event) => {
         event.preventDefault();
-        setElementStartPos(currentPosition);
+        const rect = event.currentTarget.getBoundingClientRect();
+        setElementStartPos({
+            x: rect.left,
+            y: rect.top
+        });
         setStartPos({x: event.clientX, y: event.clientY});
         setDragging(true);
         console.log(`it is ${dragging} that am dragging`)
-    }, [currentPosition]);
+    }, []);
 
     const handleRelease = useCallback(() => {
         if (dragging) {
@@ -50,9 +54,9 @@ const Element = forwardRef(( { text, id, position, onDragStop, inventory }, ref 
     }, [dragging, handleMouseMove, handleRelease]);
 
     const style = {
-        position: 'absolute',
-        left: `${currentPosition.x}px`,
-        top: `${currentPosition.y}px`,
+        position: (!inventory || dragging) ? 'absolute' : 'relative',
+        left: (!inventory || dragging) ? `${currentPosition.x}px` : 'auto',
+        top: (!inventory || dragging) ? `${currentPosition.y}px` : 'auto',
         display: 'inline-block',
         paddingTop: '1px',
         paddingBottom: '1px',
@@ -66,6 +70,8 @@ const Element = forwardRef(( { text, id, position, onDragStop, inventory }, ref 
         fontSize: '16px',
         textAlign: 'center',
         cursor: dragging ? 'grabbing' : 'grab',
+        transition: dragging ? 'none' : 'transform .3s ease',
+        width: 'fit-content'
     };
 
     return (
