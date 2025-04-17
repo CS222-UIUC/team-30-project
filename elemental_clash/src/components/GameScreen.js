@@ -42,7 +42,6 @@ const GameScreen = () => {
       */
      <div>
       <PlayingField initElements={initialElements}/>
-      <VerticalDivider />
      </div>
   );
 };

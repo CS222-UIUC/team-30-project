@@ -1,13 +1,10 @@
 import React, {useRef, useState, useEffect, useCallback} from 'react';
-import Element from './Element'
+import Element from './Element';
 import { getElementProduct } from './All_Elements';
-
-
-
+import VerticalDivider from './Divider';
 
 const PlayingField = ( { initElements } ) => {
-    
-    
+
     const elementRefs = useRef({});
     const [elements, setElements] = useState([]);
     const [inventoryElements, setInventoryElements] = useState(initElements);
@@ -49,26 +46,27 @@ const PlayingField = ( { initElements } ) => {
             let workingId = id;
             console.log("WORKING ID 1: " + workingId);
             // setTimeout( () => {
-                if (inventory) {
-                    const currRef = elementRefs.current[workingId];
-                    const rect = currRef.getBoundingClientRect();
-                    console.log(finalPosition.x);
-                    console.log(window.innerWidth*.3);
-                    if (finalPosition.x > window.innerWidth*.3) {
-                        console.log("INVENTORY GANG BUT OVER HERE");
-                        const newEle = inventoryElements.find(ele => ele.id == workingId);
-                        workingId = `${newEle.name}-${Date.now()}`;
-                        setElements(prevElements => {
-                            console.log(newEle.name)
-                            return prevElements.concat({id: workingId, name: newEle.name, position:{x: finalPosition.x, y: finalPosition.y}});
-                        });
-                        setElements(prevElements => prevElements.filter(element => element && element.name !== undefined));
-                    }
+            if (inventory) {
+                const currRef = elementRefs.current[workingId];
+                const rect = currRef.getBoundingClientRect();
+                console.log(finalPosition.x);
+                console.log(window.innerWidth * 0.3);
+                if (finalPosition.x > window.innerWidth * 0.3) {
+                    console.log("INVENTORY GANG BUT OVER HERE");
+                    const newEle = inventoryElements.find(ele => ele.id == workingId);
+                    workingId = `${newEle.name}-${Date.now()}`;
+                    setElements(prevElements => {
+                        console.log(newEle.name);
+                        return prevElements.concat({id: workingId, name: newEle.name, position:{x: finalPosition.x, y: finalPosition.y}});
+                    });
+                    
                     console.log("INVENTORY GANG")
                     console.log(finalPosition)
                 }
-            // }, 0);
-            console.log("WORKING ID 2: " + workingId);
+                // }, 0);
+                console.log("WORKING ID 2: " + workingId);
+            }
+
             const colliders = checkCollision(workingId);
             if (colliders) {
                 const [ele1Id, ele2Id] = colliders;
@@ -94,7 +92,7 @@ const PlayingField = ( { initElements } ) => {
                             console.error("Error while getting element product:", error);
                         });
                         return prevElements;
-                        
+                                                
                         
                         // const new_element = getElementProduct(ele1.name, ele2.name);
                         // console.log("WHERE ARE UYOU");
@@ -109,13 +107,22 @@ const PlayingField = ( { initElements } ) => {
     }, [checkCollision]);
 
     return (
-        <div>
-            <div className = 'inventory'>
+        <div style={{ display: 'flex', height: '100vh', alignItems: 'flex-start' }}>
+            <div className='inventory'
+                style={{
+                    width: '30vw',
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(150px, auto))', // Grid layout here
+                    gap: '15px', // space between eles
+                    paddingTop: '15px',
+                    paddingLeft: '15px'
+                }}
+            >
                 {inventoryElements.map((element) => (
-                        <Element 
+                    <Element
                         key = {element.id}
                         id={element.id}
-                        text={element.name} 
+                        text={element.name}
                         position = {element.position}
                         onDragStop={handleDragStop}
                         inventory = {true}
@@ -126,25 +133,28 @@ const PlayingField = ( { initElements } ) => {
                                 delete elementRefs.current[element.id];
                             }
                         }}
-                        />
-                    ))}
+                    />
+                ))}
             </div>
-            <div className = 'active'>
+
+            <VerticalDivider />
+
+            <div className='active'>
                 {elements.map((element) => (
-                    <Element 
-                    key = {element.id}
-                    id={element.id}
-                    text={element.name} 
-                    position = {element.position}
-                    onDragStop={handleDragStop}
-                    inventory = {false}
-                    ref={domNode => {
-                        if (domNode) {
-                            elementRefs.current[element.id] = domNode;
-                        } else {
-                            delete elementRefs.current[element.id];
-                        }
-                    }}
+                    <Element
+                        key = {element.id}
+                        id={element.id}
+                        text={element.name}
+                        position = {element.position}
+                        onDragStop={handleDragStop}
+                        inventory = {false}
+                        ref={domNode => {
+                            if (domNode) {
+                                elementRefs.current[element.id] = domNode;
+                            } else {
+                                delete elementRefs.current[element.id];
+                            }
+                        }}
                     />
                 ))}
             </div>
