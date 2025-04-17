@@ -5,8 +5,8 @@ const VerticalDivider = () => {
     <div style={{
       borderLeft: '2px solid black',
       height: '100%',
-      position: 'fixed',
-      left: '30%',
+      // position: 'auto',
+      // left: '30%',
     }} />
   );
 };
