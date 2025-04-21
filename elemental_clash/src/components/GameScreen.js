@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import Button from './Button/Button';
 // import { DndProvider } from 'react-dnd';
 // import { HTML5Backend } from 'react-dnd-html5-backend';
 import Inventory from './Inventory';
@@ -22,28 +23,27 @@ const initialElements = [
 
 
 const GameScreen = () => {
-  const [elements, setElements] = React.useState(initialElements);
-  // const nodeRef = useRef(null);
+  const [elements, setElements] = React.useState([]);
+
+  const clearElements = () => {
+    setElements([]);
+  };
 
   return (
-    // <DndProvider backend={HTML5Backend}>
-    //   <div style={{ display: 'flex', height: '100vh' }}>
-    //     <Inventory elements={initialElements} />
-    //     <Sandbox />
-    //     <GameStateComponent />
-    //   </div>
-    // </DndProvider>
-    /**
-      <Draggable nodeRef = {nodeRef}>
-        <div ref={nodeRef}>
-          <Element text="Ayy" />  
-        </div>
-      </Draggable>
-      */
-     <div>
-      <PlayingField initElements={initialElements}/>
-     </div>
+    <div style={{ position: 'relative', height: '100vh' }}>
+      <PlayingField initElements={initialElements} elements={elements} setElements={setElements} />
+      <Button
+        text="Remove Elements"
+        onClick={clearElements}
+        style={{
+          position: 'absolute',
+          bottom: '10px',
+          right: '10px',
+          zIndex: 100, // Ensure the button is above other elements
+        }}
+      />
+    </div>
   );
 };
 
-export default GameScreen; 
+export default GameScreen;
