@@ -2,19 +2,14 @@ import styles from './Button.module.css';
 import {useState} from "react"
 import { generateFiveDigitCode } from '../GameStateComponent';
 
-function Button({ text = 'Test'}) {
-    const [currentID, setNewID] = useState(text);
-    const whenClicked = () => {
-        console.log("HHHHHHHHHHHH");
-        setNewID(generateFiveDigitCode());
-    };
-
+function Button({ text = 'Test', onClick, style }) {
     return (
-        <button 
+        <button
             className={styles.button}
-            onClick={whenClicked}
+            onClick={onClick}
+            style={style}
         >
-            {currentID}
+            {text}
         </button>
     );
 }

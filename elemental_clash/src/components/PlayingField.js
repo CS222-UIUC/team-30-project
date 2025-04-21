@@ -3,11 +3,10 @@ import Element from './Element';
 import { getElementProduct } from './All_Elements';
 import VerticalDivider from './Divider';
 
-const PlayingField = ( { initElements } ) => {
+const PlayingField = ( { initElements, elements, setElements } ) => {
 
     const elementRefs = useRef({}); //references to Element components storing elements (great naming scheme I know)
-    const [elements, setElements] = useState([]); //Tracks active (combination) elements
-    const [inventoryElements, setInventoryElements] = useState(initElements); //Tracks inventory elements
+    const [inventoryElements, setInventoryElements] = useState(initElements);
 
     /**
      * Takes the id of an element in elements as an argument
@@ -132,7 +131,7 @@ const PlayingField = ( { initElements } ) => {
                 });
             }
         }, 0)
-    }, [checkCollision, elements, inventoryElements]);
+    }, [checkCollision, elements, inventoryElements, setElements]);
 
     return (
         <div style={{ display: 'flex', height: '100vh', alignItems: 'flex-start' }}>
@@ -168,9 +167,9 @@ const PlayingField = ( { initElements } ) => {
             <VerticalDivider />
 
             <div className='active'>
-                {elements.map((element) => (
+                {elements && elements.map((element) => (
                     <Element
-                        key = {element.id}
+                        key={element.id}
                         id={element.id}
                         text={element.name}
                         position = {element.position}
