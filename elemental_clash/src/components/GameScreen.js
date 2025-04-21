@@ -23,7 +23,7 @@ const initialElements = [
 
 
 const GameScreen = () => {
-  const [elements, setElements] = React.useState(initialElements);
+  const [elements, setElements] = React.useState([]);
 
   const clearElements = () => {
     setElements([]);
