@@ -11,8 +11,8 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 export async function getElementProduct(parentOne, parentTwo) {
     try {
-    let element = getElementByParents(parentOne, parentTwo);
-    let elementTwo = getElementByParents(parentTwo, parentOne);
+    let element = await getElementByParents(parentOne, parentTwo);
+    let elementTwo = await getElementByParents(parentTwo, parentOne);
     if(element == null && elementTwo == null){
         // Must calculate element using AI, and insert the data
         // return element from AI
