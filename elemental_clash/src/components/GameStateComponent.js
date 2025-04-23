@@ -33,7 +33,7 @@ export async function generateFiveDigitCode(){
   for(let i = 0; i < 100000; i++){ // Didn't want to put while true because just in case
     let result = "";
     for(let num = 0; num < 5; num++){
-      let index = Math.floor(Math.random() * 62);
+      let index = Math.floor(Math.random() * listOfPossibleVals.length);
       result += listOfPossibleVals[index];
     }
     console.log(result);
