@@ -24,6 +24,14 @@ export async function getElementProduct(parentOne, parentTwo) {
             INSERT INTO elements (element, parentOne, parentTwo)
             VALUES (newElement, parentOne, parentTwo)
         */
+            console.log("combination not in database");
+            const result = await run(parentOne+"," +parentTwo);
+            console.log("and the result is.." + result);
+
+            const { error } = await supabase
+                .from('elemental_combinations')
+                .insert({element_1: parentOne, element_2:  parentTwo, element_result: result});
+            element = result;
     }
     if(element == null){
         return elementTwo;
@@ -53,14 +61,8 @@ const getElementByParents = async (parentOne, parentTwo) => {
         console.log("third log");
         
         if(data == null){
-            console.log("combination not in database");
-            const result = await run(parentOne+"," +parentTwo);
-            console.log("and the result is.." + result);
 
-            const { error } = await supabase
-                .from('elemental_combinations')
-                .insert({element_1: parentOne, element_2:  parentTwo, element_result: result});
-            return result;
+            return null;
             
         }
         console.log(data);
