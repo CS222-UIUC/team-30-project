@@ -74,3 +74,32 @@ const getElementByParents = async (parentOne, parentTwo) => {
 export default getElementByParents;
 
 
+
+export async function getRandomElement() {
+  
+    const { count, error: countError } = await supabase
+      .from('elemental_combinations')
+      .select('*', { head: true, count: 'exact' })
+  
+    if (countError) {
+      console.error('Error counting elements:', countError);
+      return null;
+    }
+  
+    const randomIndex = Math.floor(Math.random() * count);
+  
+    const { data, error: fetchError } = await supabase
+      .from('elemental_combinations')
+      .select('element_result')
+      .range(randomIndex, randomIndex)
+      .single();
+  
+    if (fetchError) {
+      console.error('Error fetching random element:', fetchError);
+      return null;
+    }
+    console.log("Target element: ", data.element_result);
+    return data.element_result;
+  }
+
+
