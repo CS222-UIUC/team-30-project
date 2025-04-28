@@ -11,6 +11,8 @@ import Element from './Element'
 import VerticalDivider from './Divider';
 import PlayingField from './PlayingField';
 
+import { getRandomElement } from './All_Elements';
+
 // let Draggable = require('react-draggable');
 // let DraggableCore = Draggable.DraggableCore;
 // Sample initial elements
@@ -25,13 +27,33 @@ const initialElements = [
 const GameScreen = () => {
   const [elements, setElements] = React.useState([]);
 
+  const [targetElement, setTargetElement] = React.useState(null);
+
   const clearElements = () => {
     setElements([]);
   };
 
+  const handleGenerateTarget = async () => {
+      const elem = await getRandomElement();
+      if (elem) setTargetElement(elem);
+      };
+
   return (
     <div style={{ position: 'relative', height: '100vh' }}>
       <PlayingField initElements={initialElements} elements={elements} setElements={setElements} />
+
+
+      <Button
+        text="Generate Target"
+        onClick={handleGenerateTarget}
+        style={{
+          position: 'absolute',
+          bottom: '10px',
+          left: '10px',
+          zIndex: 100,
+        }}
+     />
+
       <Button
         text="Remove Elements"
         onClick={clearElements}
@@ -42,6 +64,8 @@ const GameScreen = () => {
           zIndex: 100, // Ensure the button is above other elements
         }}
       />
+
+
     </div>
   );
 };
