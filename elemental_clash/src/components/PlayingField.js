@@ -85,11 +85,11 @@ const PlayingField = ( { initElements, elements, setElements } ) => {
             const colliders = checkCollision(workingId);
             if (colliders) { //if there's a collision...
                 const [ele1Id, ele2Id] = colliders;
-                setElements(prevElements => {
-                    const ele1 = prevElements.find(ele => ele.id == ele1Id); //get both elements in the collision
-                    const ele2 = prevElements.find(ele => ele.id == ele2Id);
+                // setElements(prevElements => {
+                    const ele1 = elements.find(ele => ele.id == ele1Id); //get both elements in the collision
+                    const ele2 = elements.find(ele => ele.id == ele2Id);
                     if (!(ele1 || ele2)) {
-                        return prevElements;
+                        // return prevElements;
                     } else {
                         //setIsLoading(true);  // Set loading to true before awaiting the promise
                         getElementProduct(ele1.name, ele2.name).then(newElement => { //wait for getElementProduct.  When it returns...
@@ -118,7 +118,7 @@ const PlayingField = ( { initElements, elements, setElements } ) => {
                             //setIsLoading(false);  // Set loading to false in case of an error
                             console.error("Error while getting element product:", error);
                         });
-                        return prevElements;
+                        // return prevElements;
                                                 
                         
                         // const new_element = getElementProduct(ele1.name, ele2.name);
@@ -128,7 +128,7 @@ const PlayingField = ( { initElements, elements, setElements } ) => {
                         
                         //return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({id: `${ele1.name}-${ele2.name}-${Date.now()}`, name:`${ele1.name}-${ele2.name}`, x: 0, y:0})
                     }
-                });
+                // });
             }
         }, 0)
     }, [checkCollision, elements, inventoryElements, setElements]);
