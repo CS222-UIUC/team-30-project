@@ -9,6 +9,39 @@ const SUPABASE_ANON_KEY = process.env.REACT_APP_SUPABASE_ANON_KEY
 // Create Supabase client
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
+// Variable to store the current target element
+let currentTargetElement = null;
+
+// Function to check if target is reached and display message
+export function checkTargetReached(element) {
+    if (currentTargetElement && element === currentTargetElement) {
+        // Display message on screen
+        const messageDiv = document.createElement('div');
+        messageDiv.textContent = 'Target Reached!';
+        messageDiv.style.position = 'fixed';
+        messageDiv.style.top = '50%';
+        messageDiv.style.left = '50%';
+        messageDiv.style.transform = 'translate(-50%, -50%)';
+        messageDiv.style.backgroundColor = 'rgba(0, 255, 0, 0.8)';
+        messageDiv.style.color = 'white';
+        messageDiv.style.padding = '20px';
+        messageDiv.style.borderRadius = '10px';
+        messageDiv.style.fontSize = '24px';
+        messageDiv.style.fontWeight = 'bold';
+        messageDiv.style.zIndex = '1000';
+        
+        document.body.appendChild(messageDiv);
+        
+        // Remove the message after 3 seconds
+        setTimeout(() => {
+            document.body.removeChild(messageDiv);
+        }, 3000);
+        
+        return true;
+    }
+    return false;
+}
+
 export async function getElementProduct(parentOne, parentTwo) {
     try {
     let element = await getElementByParents(parentOne, parentTwo);
@@ -34,8 +67,12 @@ export async function getElementProduct(parentOne, parentTwo) {
             element = result;
     }
     if(element == null){
-        return elementTwo;
+        element = elementTwo;
     }
+    
+    // Check if the resulting element matches the target
+    checkTargetReached(element);
+    
     return element;
 } catch (error) {
     console.log("error over here");
@@ -101,6 +138,10 @@ export async function getRandomElement() {
       return null;
     }
     console.log("Target element: ", data.element_result);
+    
+    // Store the target element for later comparison
+    currentTargetElement = data.element_result;
+    
     return data.element_result;
   }
 
