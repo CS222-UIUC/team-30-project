@@ -65,7 +65,19 @@ const GameScreen = () => {
         }}
       />
 
-
+      {targetElement && (<div style={{
+        position: 'absolute',
+        bottom: '50px',
+        left: '10px',
+        padding: '8px 12px',
+        background: '#222',
+        color: '#fff',
+        borderRadius: '8px',
+        zIndex: 100,
+      }}>
+      {targetElement}
+      </div>
+      )}
     </div>
   );
 };
