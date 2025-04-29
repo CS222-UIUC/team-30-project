@@ -85,50 +85,37 @@ const PlayingField = ( { initElements, elements, setElements } ) => {
             const colliders = checkCollision(workingId);
             if (colliders) { //if there's a collision...
                 const [ele1Id, ele2Id] = colliders;
-                // setElements(prevElements => {
-                    const ele1 = elements.find(ele => ele.id == ele1Id); //get both elements in the collision
-                    const ele2 = elements.find(ele => ele.id == ele2Id);
-                    if (!(ele1 || ele2)) {
-                        // return prevElements;
-                    } else {
-                        //setIsLoading(true);  // Set loading to true before awaiting the promise
-                        getElementProduct(ele1.name, ele2.name).then(newElement => { //wait for getElementProduct.  When it returns...
-                            setElements(prevElements => {
-                                //setIsLoading(false);  // Set loading to false after the promise resolves
-                                console.log("A", prevElements);
-                                return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({ //remove the two old elements and add their product
-                                    id: `${newElement}-${Date.now()}`,
-                                    name: newElement,
-                                    position: {x: (finalPosition.x+finalPosition.x)/2,
-                                    y: (finalPosition.y+finalPosition.y)/2}
-                                });
+                const ele1 = elements.find(ele => ele.id == ele1Id); //get both elements in the collision
+                const ele2 = elements.find(ele => ele.id == ele2Id);
+                if (!(ele1 || ele2)) {
+                    //setIsLoading(true);  // Set loading to true before awaiting the promise
+                    getElementProduct(ele1.name, ele2.name).then(newElement => { //wait for getElementProduct.  When it returns...
+                        setElements(prevElements => {
+                            //setIsLoading(false);  // Set loading to false after the promise resolves
+                            console.log("A", prevElements);
+                            return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({ //remove the two old elements and add their product
+                                id: `${newElement}-${Date.now()}`,
+                                name: newElement,
+                                position: {x: (finalPosition.x+finalPosition.x)/2,
+                                y: (finalPosition.y+finalPosition.y)/2}
                             });
-
-                            setInventoryElements(prevInventory => { //If the product element isn't in the inventory, add it
-                                if (!prevInventory.find(ele => ele.name == newElement)) {
-                                    return [...prevInventory, {id: `${newElement}-${Date.now()}`, name: newElement, position: {x: 0, y: 0}}];
-                                } else {
-                                    return prevInventory;
-                                }
-                            });
-                            console.log("OVER HERE", inventoryElements);
-
-                            
-                        }).catch(error => {
-                            //setIsLoading(false);  // Set loading to false in case of an error
-                            console.error("Error while getting element product:", error);
                         });
-                        // return prevElements;
-                                                
+
+                        setInventoryElements(prevInventory => { //If the product element isn't in the inventory, add it
+                            if (!prevInventory.find(ele => ele.name == newElement)) {
+                                return [...prevInventory, {id: `${newElement}-${Date.now()}`, name: newElement, position: {x: 0, y: 0}}];
+                            } else {
+                                return prevInventory;
+                            }
+                        });
+                        console.log("OVER HERE", inventoryElements);
+
                         
-                        // const new_element = getElementProduct(ele1.name, ele2.name);
-                        // console.log("WHERE ARE UYOU");
-                        // console.log("new_element: " + new_element);
-                        // return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({id: `${new_element}-${Date.now()}`, name:`${new_element}`, x: 0, y:0})
-                        
-                        //return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({id: `${ele1.name}-${ele2.name}-${Date.now()}`, name:`${ele1.name}-${ele2.name}`, x: 0, y:0})
-                    }
-                // });
+                    }).catch(error => {
+                        //setIsLoading(false);  // Set loading to false in case of an error
+                        console.error("Error while getting element product:", error);
+                    });
+                }
             }
         }, 0)
     }, [checkCollision, elements, inventoryElements, setElements]);
