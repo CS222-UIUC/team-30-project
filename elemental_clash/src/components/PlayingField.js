@@ -87,7 +87,7 @@ const PlayingField = ( { initElements, elements, setElements } ) => {
                 const [ele1Id, ele2Id] = colliders;
                 const ele1 = elements.find(ele => ele.id == ele1Id); //get both elements in the collision
                 const ele2 = elements.find(ele => ele.id == ele2Id);
-                if (!(ele1 || ele2)) {
+                if ((ele1 || ele2)) {
                     //setIsLoading(true);  // Set loading to true before awaiting the promise
                     getElementProduct(ele1.name, ele2.name).then(newElement => { //wait for getElementProduct.  When it returns...
                         setElements(prevElements => {
