@@ -137,10 +137,15 @@ export async function getRandomElement() {
       console.error('Error fetching random element:', fetchError);
       return null;
     }
-    console.log("Target element: ", data.element_result);
-    
+
     // Store the target element for later comparison
-    currentTargetElement = data.element_result;
+    const currentTargetElement = data.element_result;
+    console.log("Target element: ", currentTargetElement);
+
+    const { data: updatedRow, error: updateError } = await supabase
+    .from('current_games')
+    .update({ target_element: currentTargetElement })
+    .eq('id', 1);
     
     return data.element_result;
   }
