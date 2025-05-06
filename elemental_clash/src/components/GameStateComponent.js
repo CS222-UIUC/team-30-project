@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import Button from './Button/Button.js';
 import { getRandomElement } from './All_Elements.js';
+import GameStatusPopup from './GameStatusPopup.js';
+import { clearElements } from './GameScreen.js';
 
 // Your Supabase URL and anon key
 const SUPABASE_URL = process.env.REACT_APP_SUPABASE_URL
@@ -74,13 +76,33 @@ const GameStateComponent = () => {
   const [createGameName, setCreateGameName] = useState('')
   const [currGameName, setCurrGameName] = useState('')
   const [playerNumber, setPlayerNumber] = useState(0)
+  const [gameOver, setGameOver] = useState(null);
 
+  const handleClosePopup = () => {
+    setGameOver(null);
+    setCurrGameName('');
+    setPlayerNumber(0);
+    setGameState(0);
+    setJoinGameName('');
+    
+  }
   useEffect(() => {
     //this is what we want to do when things change (right now there's just a popup)
     const handleUpdates = (payload) => {
       console.log('AYO SOMETHING CHANGED BABYYY', payload)
         setGameState(payload.new)
-        setShowPopup(true)
+        // console.log("PAYLOAD:")
+        // console.log(payload)
+        // setShowPopup(true)
+
+
+        if (payload.new['winning_player'] != null) {
+          if (payload.new['winning_player'] == playerNumber) {
+            setGameOver(1);
+          } else {
+            setGameOver(0);
+          }
+        }
         
         // hide popup after 3 seconds
         setTimeout(() => {
@@ -287,6 +309,12 @@ const GameStateComponent = () => {
 
   return (
     <div>
+      {/* GameStatusPopup overlay for game over */}
+      {gameOver !== null && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+          <GameStatusPopup status={gameOver} onClose={handleClosePopup} />
+        </div>
+      )}
       <h1>Game State</h1>
       <p>Game Status: {gameState && String(gameState)}</p>
       <div>
@@ -305,22 +333,6 @@ const GameStateComponent = () => {
         End Game
       </button>
       {/* added */}
-
-      {showPopup && (
-        <div style={{
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          backgroundColor: 'black',
-          color: 'white',
-          padding: '20px 40px',
-          borderRadius: '20px',
-          fontSize: '24px',
-        }}>
-          Game Toggled!
-        </div>
-      )}
     </div>
   )
 }
