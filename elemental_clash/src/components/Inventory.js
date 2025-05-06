@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import React, {useState, useEffect} from 'react';
 import DraggableElement from './DraggableElement';
 
-const Inventory = ({ elements }) => {
+let clearInventory = () => {console.log("GAME OVER")};
+
+export {clearInventory};
+
+const Inventory = ({elements, setElements}) => {
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    clearInventory = () => {
+      setElements([]);
+    };
+  }, [setElements]);
 
   return (
     <div style={{ width: '200px', textAlign: 'center' }}>
       <h1>Inventory</h1>
-      {/* <div>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="DATABASE SEARCH"
-        />
-      </div> */}
       <div style={{ 
         display: 'grid', 
         gridTemplateColumns: 'repeat(2, 1fr)',
