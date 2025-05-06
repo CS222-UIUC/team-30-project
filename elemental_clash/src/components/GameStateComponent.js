@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import Button from './Button/Button.js';
 import { getRandomElement } from './All_Elements.js';
+import { Element_Player_Num } from './All_Elements.js';
 
 // Your Supabase URL and anon key
 const SUPABASE_URL = process.env.REACT_APP_SUPABASE_URL
@@ -210,6 +211,7 @@ const GameStateComponent = () => {
             console.log(error)
           } else {
             setPlayerNumber(1);
+            Element_Player_Num(1);
             setCurrGameName(joinGameName);
           }
           
@@ -225,6 +227,7 @@ const GameStateComponent = () => {
             console.log(error);
           } else {
             setPlayerNumber(2);
+            Element_Player_Num(2);
             setCurrGameName(joinGameName);
           }
         } else { //should never happen, was using to debug.
