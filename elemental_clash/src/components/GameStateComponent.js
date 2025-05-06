@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import Button from './Button/Button.js';
+import { getRandomElement } from './All_Elements.js';
 
 // Your Supabase URL and anon key
 const SUPABASE_URL = process.env.REACT_APP_SUPABASE_URL
@@ -264,6 +265,7 @@ const GameStateComponent = () => {
     .eq('game_name', newName)
     .single()
 
+    getRandomElement(newName)
     if (data != null) { //game already in table
       console.log("Oy butthead, this game already exists!  You can't make something that exists!");
     } else {
@@ -279,6 +281,8 @@ const GameStateComponent = () => {
         setCurrGameName(newName);
       }
     }
+
+
   }
 
   return (
