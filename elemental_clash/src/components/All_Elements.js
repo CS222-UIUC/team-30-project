@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import run from '../config/gemini'
+import {clearInventory} from './Inventory.js';
 
 // Your Supabase URL and anon key
 const SUPABASE_URL = process.env.REACT_APP_SUPABASE_URL
@@ -15,6 +16,7 @@ let currentTargetElement = null;
 // Function to check if target is reached and display message
 export function checkTargetReached(element) {
     if (currentTargetElement && element === currentTargetElement) {
+        clearInventory();
         // Display message on screen
         const messageDiv = document.createElement('div');
         messageDiv.textContent = 'Target Reached!';
