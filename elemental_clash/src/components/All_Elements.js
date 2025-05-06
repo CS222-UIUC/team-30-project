@@ -12,10 +12,40 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 // Variable to store the current target element
 let currentTargetElement = null;
+let gameName = null;
+let PlayerNumber = null;
+
+export function Element_Player_Num(num) {
+    console.log("player number: " + num);
+    PlayerNumber = num;
+
+}
+
+async function setDataWinner() {
+    const { data: updatedRow, error: er } = await supabase
+    .from('current_games')
+    .update({ winning_player: PlayerNumber })
+    .eq('game_name', gameName);
+    if (er) {
+        console.error("Error updating winning player:", er);
+    } else {
+        console.log("Successfully updated winning player to:", PlayerNumber);
+    }
+    
+}
 
 // Function to check if target is reached and display message
 export function checkTargetReached(element) {
     if (currentTargetElement && element === currentTargetElement) {
+        console.log("Target reached! Current player number:", PlayerNumber);
+        setDataWinner();
+        
+        // Check if PlayerNumber is set
+        if (PlayerNumber === null || PlayerNumber === undefined) {
+            console.error("Player number not set when target reached");
+            // Default to player 1 if not set, or handle as needed
+            PlayerNumber = 1;
+        }
         clearInventory();
         // Display message on screen
         const messageDiv = document.createElement('div');
@@ -114,9 +144,8 @@ const getElementByParents = async (parentOne, parentTwo) => {
 
 export default getElementByParents;
 
-
-
 export async function getRandomElement(name) {
+    gameName = name;
   
     const { count, error: countError } = await supabase
       .from('elemental_combinations')
@@ -140,16 +169,17 @@ export async function getRandomElement(name) {
       return null;
     }
 
-    // Store the target element for later comparison
-    const currentTargetElement = data.element_result;
+    // Update the global variable instead of creating a new local variable
+    currentTargetElement = data.element_result;
     console.log("Target element: ", currentTargetElement);
 
     const { data: updatedRow, error: updateError } = await supabase
     .from('current_games')
     .update({ target_element: currentTargetElement })
     .eq('game_name', name);
+    console.log("Target element: ", currentTargetElement);
     
     return data.element_result;
-  }
+}
 
 
