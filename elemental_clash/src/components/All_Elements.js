@@ -114,7 +114,7 @@ export default getElementByParents;
 
 
 
-export async function getRandomElement() {
+export async function getRandomElement(name) {
   
     const { count, error: countError } = await supabase
       .from('elemental_combinations')
@@ -145,7 +145,7 @@ export async function getRandomElement() {
     const { data: updatedRow, error: updateError } = await supabase
     .from('current_games')
     .update({ target_element: currentTargetElement })
-    .eq('id', 1);
+    .eq('game_name', name);
     
     return data.element_result;
   }

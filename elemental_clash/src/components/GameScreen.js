@@ -43,7 +43,7 @@ const GameScreen = () => {
       <PlayingField initElements={initialElements} elements={elements} setElements={setElements} />
 
 
-      <Button
+      {/* <Button
         text="Generate Target"
         onClick={handleGenerateTarget}
         style={{
@@ -52,7 +52,7 @@ const GameScreen = () => {
           left: '10px',
           zIndex: 100,
         }}
-     />
+     /> */}
 
       <Button
         text="Remove Elements"
