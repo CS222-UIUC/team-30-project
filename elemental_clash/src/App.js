@@ -5,9 +5,31 @@ import Button from './components/Button/Button.js'
 import VerticalDivider from './components/Divider.js'
 import GameStateComponent from './components/GameStateComponent.js';
 import getElementByParents from './components/All_Elements.js';
+import { getRandomElement } from './components/All_Elements';
 
 
 function App() {
+  const [targetElement, setTargetElement] = React.useState('');
+  const [targetReached, setTargetReached] = React.useState(false);
+  const [resetElements, setResetElements] = React.useState(false);
+
+  const handleGenerateTarget = (gameName) => {
+    setTargetElement(getRandomElement(gameName));
+  }
+
+  const handleChangeTarget = (newTargetName) => {
+    setTargetElement(newTargetName);
+  }
+
+  const handleCheckTarget = (newElement) => {
+    console.log("handleCheckTarget in App.js running...")
+    setTargetReached(targetElement.trim() === newElement.trim());
+  }
+
+  const shouldResetElements = () => {
+    console.log('should reset elements in app.js')
+    setResetElements(true);
+  }
 /*  const handleButtonClick = () => {
      console.log('Button clicked!');
      getElementByParents("bomb", "baby");
@@ -38,10 +60,24 @@ function App() {
   <div className="App" style={{display: "flex", flexDirection: "row"}}>
   {/*<Button style={{ marginLeft: '10px' }} text="Element" onClick={handleButtonClick} /> */}
     <div style={{flex: 2}}>
-      <GameScreen />
+      <GameScreen handleCheckTarget={handleCheckTarget} resetElements={resetElements} setResetElements={setResetElements}/>
     </div>
+    {targetElement && (<div style={{
+        position: 'absolute',
+        bottom: '50px',
+        left: '50vw',
+        translate: '-50%',
+        padding: '8px 12px',
+        background: '#222',
+        color: '#fff',
+        borderRadius: '8px',
+        zIndex: 100,
+      }}>
+      {targetElement}
+      </div>
+      )}
     <div style={{flex: 1}}>
-      <GameStateComponent />
+      <GameStateComponent handleGenerateTarget={handleGenerateTarget} handleChangeTarget={handleChangeTarget} targetReached={targetReached} setTargetReached={setTargetReached} shouldResetElements={shouldResetElements}/>
     </div>
   </div>
  )

@@ -3,7 +3,6 @@ import { createClient } from '@supabase/supabase-js'
 import Button from './Button/Button.js';
 import { getRandomElement } from './All_Elements.js';
 import GameStatusPopup from './GameStatusPopup.js';
-import { clearElements } from './GameScreen.js';
 import { Element_Player_Num } from './All_Elements.js';
 
 
@@ -71,7 +70,7 @@ export async function generateFiveDigitCode(){
 }
 
 
-const GameStateComponent = () => {
+const GameStateComponent = ( { handleGenerateTarget, handleChangeTarget, targetReached, setTargetReached, shouldResetElements } ) => {
   const [gameState, setGameState] = useState(0)
   const [showPopup, setShowPopup] = useState(false)
   const [joinGameName, setJoinGameName] = useState('')
@@ -86,8 +85,31 @@ const GameStateComponent = () => {
     setPlayerNumber(0);
     setGameState(0);
     setJoinGameName('');
-    
+    handleChangeTarget('');
+    shouldResetElements();
   }
+
+  useEffect(() => {
+    const updateWinner = async () => {
+      if (targetReached) {
+        const { data: updatedRow, error: er } = await supabase
+          .from('current_games')
+          .update({ winning_player: playerNumber })
+          .eq('game_name', currGameName);
+        if (er) {
+          console.error("Error updating winning player:", er);
+        } else {
+          console.log("Successfully updated winning player to:", playerNumber);
+        }
+      }
+    }
+    if (targetReached) {
+      console.log('updating winner...')
+      updateWinner();
+      setTargetReached(false);
+    }
+  }, [targetReached, playerNumber, currGameName] )
+
   useEffect(() => {
     //this is what we want to do when things change (right now there's just a popup)
     const handleUpdates = (payload) => {
@@ -219,6 +241,7 @@ const GameStateComponent = () => {
 
     // console.log(data);
     if (data != null) { //the game was in the table
+      handleChangeTarget(data['target_element']);
       if (data['player_1'] === true && data['player_2'] === true) { //already two players in the game
         console.log('oy butthead, this game is already full!')
       } else {
@@ -291,7 +314,7 @@ const GameStateComponent = () => {
     .eq('game_name', newName)
     .single()
 
-    getRandomElement(newName)
+    handleGenerateTarget(newName);
     if (data != null) { //game already in table
       console.log("Oy butthead, this game already exists!  You can't make something that exists!");
     } else {

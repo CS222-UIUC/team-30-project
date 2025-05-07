@@ -103,12 +103,12 @@ export async function getElementProduct(parentOne, parentTwo) {
     }
     
     // Check if the resulting element matches the target
-    checkTargetReached(element);
+    // checkTargetReached(element);
     
     return element;
 } catch (error) {
     console.log("error over here");
-    return "oh well";
+    return "something went wrong D:";
 }
 }
 

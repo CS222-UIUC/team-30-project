@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Button from './Button/Button';
 // import { DndProvider } from 'react-dnd';
 // import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -24,14 +24,25 @@ const initialElements = [
 ];
 
 
-const GameScreen = () => {
+const GameScreen = ({ handleCheckTarget, resetElements, setResetElements }) => {
   const [elements, setElements] = React.useState([]);
 
   const [targetElement, setTargetElement] = React.useState(null);
 
+  useEffect(() => {
+    if (resetElements) {
+      console.log('reset elements in gamescreen');
+      clearElements();
+    }
+  }, [resetElements])
+  
   const clearElements = () => {
     setElements([]);
   };
+
+  const handleCheckTarget2 = (newElement) => {
+    handleCheckTarget(newElement);
+  }
 
   const handleGenerateTarget = async () => {
       const elem = await getRandomElement();
@@ -40,7 +51,7 @@ const GameScreen = () => {
 
   return (
     <div style={{ position: 'relative', height: '100vh' }}>
-      <PlayingField initElements={initialElements} elements={elements} setElements={setElements} />
+      <PlayingField initElements={initialElements} elements={elements} setElements={setElements} handleCheckTarget={handleCheckTarget2} resetElements={resetElements} setResetElements={setResetElements}/>
 
 
       {/* <Button
@@ -60,7 +71,8 @@ const GameScreen = () => {
         style={{
           position: 'absolute',
           bottom: '10px',
-          right: '10px',
+          left: '50vw',
+          translate: '-50%',
           zIndex: 100, // Ensure the button is above other elements
         }}
       />
