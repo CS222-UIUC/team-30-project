@@ -74,6 +74,7 @@ const GameScreen = ({ handleCheckTarget, resetElements, setResetElements }) => {
           left: '50vw',
           translate: '-50%',
           zIndex: 100, // Ensure the button is above other elements
+          userSelect: 'none'
         }}
       />
 

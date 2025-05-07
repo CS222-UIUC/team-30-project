@@ -42,7 +42,7 @@ const Element = forwardRef(( { text, id, position, onDragStop, inventory }, ref 
                 setCurrentPosition({x: elementStartPos.x, y: elementStartPos.y});
             }
             if (onDragStop) {
-                onDragStop(id, startPos, currentPosition, inventory);
+                onDragStop(id, startPos, currentPosition, setCurrentPosition, inventory);
             }
         }
         console.log(`${text} was released`)
@@ -83,7 +83,9 @@ const Element = forwardRef(( { text, id, position, onDragStop, inventory }, ref 
         textAlign: 'center',
         cursor: dragging ? 'grabbing' : 'grab', //styling
         transition: dragging ? 'none' : 'transform .3s ease', //avoid goofy ah teleporting
-        width: 'fit-content' //keeps the inventory elements from filling their columns
+        width: 'fit-content', //keeps the inventory elements from filling their columns
+        userSelect: 'none', //don't let them highlight text
+        WebkitUserSelect: 'none', //mobile support, not that we use that right now...
     };
 
     return (

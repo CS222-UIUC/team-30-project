@@ -64,7 +64,7 @@ const PlayingField = ( { initElements, elements, setElements, handleCheckTarget,
      * If an inventory element was moved out of the inventory, adds a new element of the same name to 'elements' and moves the inventory element back
      * If regular element, checks for collision.  If there's a collision, removes both elements from elements and adds their product to elements
      */
-    const handleDragStop = useCallback((id, startPos, finalPosition, inventory) => {
+    const handleDragStop = useCallback((id, startPos, finalPosition, setCurrentPosition, inventory) => {
         setTimeout(() => {
             let workingId = id;
             console.log("WORKING ID 1: " + workingId);
@@ -88,6 +88,11 @@ const PlayingField = ( { initElements, elements, setElements, handleCheckTarget,
                 }
                 // }, 0);
                 console.log("WORKING ID 2: " + workingId);
+            } else {
+                if (finalPosition.x < window.innerWidth*.3) {
+                    setCurrentPosition({x: startPos.x, y: startPos.y});
+                }
+                return;
             }
 
             const colliders = checkCollision(workingId);

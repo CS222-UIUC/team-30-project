@@ -342,24 +342,16 @@ const GameStateComponent = ( { handleGenerateTarget, handleChangeTarget, targetR
           <GameStatusPopup status={gameOver} onClose={handleClosePopup} />
         </div>
       )}
-      <h1>Game State</h1>
-      <p>Game Status: {gameState && String(gameState)}</p>
+      <h1 style = {{userSelect: 'none'}}>Game State</h1>
+      <p style = {{userSelect: 'none'}}>Game Status: {gameState && String(gameState)}</p>
       <div>
         <input type="text" value={createGameName} onChange={handleCreateGameNameChange} />
-        <button onClick={handleCreateGameNameSubmit}> Create Game </button>
+        <button onClick={handleCreateGameNameSubmit} style = {{userSelect: 'none'}}> Create Game </button>
       </div>
       <div>
         <input type="text" value={joinGameName} onChange={handleJoinGameNameChange} />
-        <button onClick={handleJoinGameNameSubmit}> Join Game </button>
+        <button onClick={handleJoinGameNameSubmit} style = {{userSelect: 'none'}}> Join Game </button>
       </div>
-      <button onClick={handleGameToggle}>
-        Toggle Game
-      </button>
-      {/* added */}
-      <button onClick={handleEndGame}> 
-        End Game
-      </button>
-      {/* added */}
     </div>
   )
 }
