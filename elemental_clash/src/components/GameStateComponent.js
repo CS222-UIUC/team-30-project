@@ -343,7 +343,7 @@ const GameStateComponent = ( { handleGenerateTarget, handleChangeTarget, targetR
         </div>
       )}
       <h1 style = {{userSelect: 'none'}}>Game State</h1>
-      <p style = {{userSelect: 'none'}}>Game Status: {gameState && String(gameState)}</p>
+      <p style = {{userSelect: 'none'}}>You are player: {playerNumber} </p>
       <div>
         <input type="text" value={createGameName} onChange={handleCreateGameNameChange} />
         <button onClick={handleCreateGameNameSubmit} style = {{userSelect: 'none'}}> Create Game </button>

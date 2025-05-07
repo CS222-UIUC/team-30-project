@@ -91,8 +91,8 @@ const PlayingField = ( { initElements, elements, setElements, handleCheckTarget,
             } else {
                 if (finalPosition.x < window.innerWidth*.3) {
                     setCurrentPosition({x: startPos.x, y: startPos.y});
-                }
-                return;
+                    return;
+                } 
             }
 
             const colliders = checkCollision(workingId);
