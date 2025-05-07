@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Button from './Button/Button';
 // import { DndProvider } from 'react-dnd';
 // import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -12,6 +12,7 @@ import VerticalDivider from './Divider';
 import PlayingField from './PlayingField';
 
 import { getRandomElement } from './All_Elements';
+import StyledButton from './buttons-collection/StyledButton';
 
 // let Draggable = require('react-draggable');
 // let DraggableCore = Draggable.DraggableCore;
@@ -24,14 +25,25 @@ const initialElements = [
 ];
 
 
-const GameScreen = () => {
+const GameScreen = ({ handleCheckTarget, resetElements, setResetElements }) => {
   const [elements, setElements] = React.useState([]);
 
   const [targetElement, setTargetElement] = React.useState(null);
 
+  useEffect(() => {
+    if (resetElements) {
+      console.log('reset elements in gamescreen');
+      clearElements();
+    }
+  }, [resetElements])
+  
   const clearElements = () => {
     setElements([]);
   };
+
+  const handleCheckTarget2 = (newElement) => {
+    handleCheckTarget(newElement);
+  }
 
   const handleGenerateTarget = async () => {
       const elem = await getRandomElement();
@@ -40,7 +52,7 @@ const GameScreen = () => {
 
   return (
     <div style={{ position: 'relative', height: '100vh' }}>
-      <PlayingField initElements={initialElements} elements={elements} setElements={setElements} />
+      <PlayingField initElements={initialElements} elements={elements} setElements={setElements} handleCheckTarget={handleCheckTarget2} resetElements={resetElements} setResetElements={setResetElements}/>
 
 
       {/* <Button
@@ -54,30 +66,21 @@ const GameScreen = () => {
         }}
      /> */}
 
-      <Button
-        text="Remove Elements"
-        onClick={clearElements}
-        style={{
+      <StyledButton variant='ripple-button' 
+      label='Remove Elements' 
+      onClick={clearElements} 
+      icon='fas fa-trash'         
+      style={{
           position: 'absolute',
-          bottom: '10px',
-          right: '10px',
+          bottom: '50px',
+          left: '50vw',
+          width: '25vw',
+          translate: '-50%',
           zIndex: 100, // Ensure the button is above other elements
+          userSelect: 'none',
+          backgroundColor: '#A7484E',
         }}
       />
-
-      {targetElement && (<div style={{
-        position: 'absolute',
-        bottom: '50px',
-        left: '10px',
-        padding: '8px 12px',
-        background: '#222',
-        color: '#fff',
-        borderRadius: '8px',
-        zIndex: 100,
-      }}>
-      {targetElement}
-      </div>
-      )}
     </div>
   );
 };

@@ -48,26 +48,26 @@ export function checkTargetReached(element) {
         }
         clearInventory();
         // Display message on screen
-        const messageDiv = document.createElement('div');
-        messageDiv.textContent = 'Target Reached!';
-        messageDiv.style.position = 'fixed';
-        messageDiv.style.top = '50%';
-        messageDiv.style.left = '50%';
-        messageDiv.style.transform = 'translate(-50%, -50%)';
-        messageDiv.style.backgroundColor = 'rgba(0, 255, 0, 0.8)';
-        messageDiv.style.color = 'white';
-        messageDiv.style.padding = '20px';
-        messageDiv.style.borderRadius = '10px';
-        messageDiv.style.fontSize = '24px';
-        messageDiv.style.fontWeight = 'bold';
-        messageDiv.style.zIndex = '1000';
+        // const messageDiv = document.createElement('div');
+        // messageDiv.textContent = 'Target Reached!';
+        // messageDiv.style.position = 'fixed';
+        // messageDiv.style.top = '50%';
+        // messageDiv.style.left = '50%';
+        // messageDiv.style.transform = 'translate(-50%, -50%)';
+        // messageDiv.style.backgroundColor = 'rgba(0, 255, 0, 0.8)';
+        // messageDiv.style.color = 'white';
+        // messageDiv.style.padding = '20px';
+        // messageDiv.style.borderRadius = '10px';
+        // messageDiv.style.fontSize = '24px';
+        // messageDiv.style.fontWeight = 'bold';
+        // messageDiv.style.zIndex = '1000';
         
-        document.body.appendChild(messageDiv);
+        // document.body.appendChild(messageDiv);
         
         // Remove the message after 3 seconds
-        setTimeout(() => {
-            document.body.removeChild(messageDiv);
-        }, 3000);
+        // setTimeout(() => {
+        //     document.body.removeChild(messageDiv);
+        // }, 3000);
         
         return true;
     }
@@ -103,12 +103,12 @@ export async function getElementProduct(parentOne, parentTwo) {
     }
     
     // Check if the resulting element matches the target
-    checkTargetReached(element);
+    // checkTargetReached(element);
     
     return element;
 } catch (error) {
     console.log("error over here");
-    return "oh well";
+    return "something went wrong D:";
 }
 }
 

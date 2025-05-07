@@ -1,0 +1,313 @@
+body {
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+  .buttons-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    width: 100%;
+  }
+  .button-box {
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #222;
+  }
+  .bg-dark {
+    background: linear-gradient(
+          #101820 50%,
+          crimson 50%
+      );
+  }
+  .bg-gray{
+    background: rgb(214, 214, 214);
+  }
+  button {
+    font-family: 'Poppins',Arial, sans-serif;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 36px;
+    transition: all 0.3s ease;
+    color: white;
+  }
+  
+  :root {
+    --primary-color: #3498db; 
+    --secondary-color: #e74c3c; 
+    --tertiary-color: #2ecc71; 
+    --accent-color: #9b59b6; 
+    --background-color: #f4f4f4;
+    --dark-color: #282936;
+  }
+  
+  /* Button 1: Simple Gradient Button */
+  .gradient-button {
+    background: linear-gradient(
+      45deg,
+      var(--primary-color),
+      var(--secondary-color)
+    );
+    border: none;
+  }
+  .gradient-button:hover {
+    background: linear-gradient(
+      45deg,
+      var(--secondary-color),
+      var(--primary-color)
+    );
+  }
+  
+  /* Button 2: Glassmorphism Button */
+  
+  .glass-button {
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.5s;
+    border: 1px solid #ccc;
+  }
+  .glass-button:after, .skewed-button:after{
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(
+      45deg,
+      transparent 50%,
+      rgba(255, 255, 255, 0.03) 58%,
+      rgba(255, 255, 255, 0.16) 67%,
+      transparent 68%
+    );
+    background-size: 200% 100%;
+    background-position: 165% 0;
+    transition: 0.7s;
+  }
+  .glass-button:hover:after,.skewed-button:hover:after {
+    background-position: -20% 0;
+  }
+  
+  /* Button 3: Neumorphism Button */
+  .neumorphism-button {
+    min-width: 150px;
+    padding: 15px 10px;
+    margin: 20px;
+    background: rgb(214, 214, 214);
+    border: none;
+    border-radius: 25px;
+    color: var(--dark-color);
+    box-shadow: -7px -7px 20px 0 rgba(255, 255, 255, 0.7),
+      7px 7px 20px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .neumorphism-button:hover {
+    box-shadow: inset -7px -7px 20px 0 rgba(255, 255, 255, 0.7),
+      inset 7px 7px 20px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Button 4: 3D Button */
+  .three-d-button {
+    background: var(--tertiary-color);
+    border: none;
+    box-shadow: 0 5px #27ae60;
+  }
+  .three-d-button:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px #27ae60;
+  }
+  
+  /* Button 5: Icon Button */
+  .icon-button {
+    background: var(--accent-color);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .icon-button i {
+    font-size: 14px;
+  }
+  .icon-button:hover {
+    background: #8e44ad;
+  }
+  
+  /* Button 6: Animated Border Button */
+  .border-button {
+    background: none;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    position: relative;
+    overflow: hidden;
+  }
+  .border-button:before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 300%;
+    height: 100%;
+    background: var(--primary-color);
+    transition: all 0.4s ease;
+    z-index: -1;
+    transform: translateX(-50%);
+  }
+  .border-button:hover {
+    color: white;
+  }
+  .border-button:hover:before {
+    top: 0;
+  }
+  
+  /* Button 7: Floating Button */
+  .floating-button {
+    background: var(--secondary-color);
+    border: none;
+    box-shadow: 0 15px 20px rgba(231, 76, 60, 0.4);
+  }
+  .floating-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 30px rgba(231, 76, 60, 0.4);
+  }
+  
+  /* Button 8: Glowing Button */
+  .glowing-button {
+    background: var(--accent-color);
+    border: none;
+    box-shadow: 0 0 15px var(--accent-color);
+  }
+  .glowing-button:hover {
+    box-shadow: 0 0 5px var(--accent-color),
+                  0 0 25px var(--accent-color),
+                  0 0 50px var(--accent-color),
+                  0 0 200px var(--accent-color);
+  }
+  
+  /* Button 9: Ripple Effect Button */
+  .ripple-button {
+    background: var(--dark-color);
+    border: none;
+    position: relative;
+    overflow: hidden;
+    color: 'white';
+  }
+  .ripple-button:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(50,50,50, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease-out;
+    z-index: 0;
+  }
+  .ripple-button:hover:after {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  
+  /* Button 10: Outline Button with Hover Fill */
+  .outline-hover-button {
+    background: var(--custom-bg, none);
+    border: 2px solid var(--tertiary-color);
+    color: var(--tertiary-color);
+  }
+  .outline-hover-button:hover {
+    background: var(--tertiary-color);
+    color: white;
+  }
+  
+  /* Button 11: Skewed Button */
+  .skewed-button {
+    background: var(--primary-color);
+    border: none;
+    border-radius: 0;
+    transform: skewX(-30deg);
+  }
+  
+  /* Button 12: Shadow Button */
+  .shadow-button {
+    background: var(--dark-color);
+    border: none;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  .shadow-button:hover {
+    background: #2c3e50;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Button 13: Round Icon Button */
+  .round-icon-button {
+    background: var(--secondary-color);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .round-icon-button:hover {
+    background: #c0392b;
+  }
+  
+  /* Button 14: Text Button with Icon */
+  .text-icon-button {
+    background: var(--tertiary-color);
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+  }
+  .text-icon-button i {
+    font-size: 14px;
+  }
+  .text-icon-button:hover {
+    background: #26d76e;
+  }
+  
+  /* Button 15: Loading Button */
+  .loading-button {
+    background: var(--accent-color);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .loading-button .spinner {
+    border: 3px solid #fff;
+    border-radius: 50%;
+    border-top: 3px solid transparent;
+    width: 15px;
+    height: 15px;
+    animation: spin 0.8s linear infinite;
+    margin-left: 10px;
+  }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

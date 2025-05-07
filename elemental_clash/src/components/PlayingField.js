@@ -3,10 +3,18 @@ import Element from './Element';
 import { getElementProduct } from './All_Elements';
 import VerticalDivider from './Divider';
 
-const PlayingField = ( { initElements, elements, setElements } ) => {
+const PlayingField = ( { initElements, elements, setElements, handleCheckTarget, resetElements, setResetElements } ) => {
 
     const elementRefs = useRef({}); //references to Element components storing elements (great naming scheme I know)
     const [inventoryElements, setInventoryElements] = useState(initElements);
+
+    useEffect(() => {
+        if (resetElements) {
+            setInventoryElements(initElements);
+            console.log('reset inventory elements in playingifeld')
+            setResetElements(false);
+        }
+    }, [resetElements])
 
     /**
      * Takes the id of an element in elements as an argument
@@ -56,7 +64,7 @@ const PlayingField = ( { initElements, elements, setElements } ) => {
      * If an inventory element was moved out of the inventory, adds a new element of the same name to 'elements' and moves the inventory element back
      * If regular element, checks for collision.  If there's a collision, removes both elements from elements and adds their product to elements
      */
-    const handleDragStop = useCallback((id, startPos, finalPosition, inventory) => {
+    const handleDragStop = useCallback((id, startPos, finalPosition, setCurrentPosition, inventory) => {
         setTimeout(() => {
             let workingId = id;
             console.log("WORKING ID 1: " + workingId);
@@ -80,6 +88,11 @@ const PlayingField = ( { initElements, elements, setElements } ) => {
                 }
                 // }, 0);
                 console.log("WORKING ID 2: " + workingId);
+            } else {
+                if (finalPosition.x < window.innerWidth*.3) {
+                    setCurrentPosition({x: startPos.x, y: startPos.y});
+                    return;
+                } 
             }
 
             const colliders = checkCollision(workingId);
@@ -94,8 +107,8 @@ const PlayingField = ( { initElements, elements, setElements } ) => {
                             //setIsLoading(false);  // Set loading to false after the promise resolves
                             console.log("A", prevElements);
                             return prevElements.filter(el => el.id != ele1Id && el.id != ele2Id).concat({ //remove the two old elements and add their product
-                                id: `${newElement}-${Date.now()}`,
-                                name: newElement,
+                                id: `${newElement.trim()}-${Date.now()}`,
+                                name: newElement.trim(),
                                 position: {x: (finalPosition.x+finalPosition.x)/2,
                                 y: (finalPosition.y+finalPosition.y)/2}
                             });
@@ -103,14 +116,15 @@ const PlayingField = ( { initElements, elements, setElements } ) => {
 
                         setInventoryElements(prevInventory => { //If the product element isn't in the inventory, add it
                             if (!prevInventory.find(ele => ele.name == newElement)) {
-                                return [...prevInventory, {id: `${newElement}-${Date.now()}`, name: newElement, position: {x: 0, y: 0}}];
+                                return [...prevInventory, {id: `${newElement.trim()}-${Date.now()}`, name: newElement.trim(), position: {x: 0, y: 0}}];
                             } else {
                                 return prevInventory;
                             }
                         });
                         console.log("OVER HERE", inventoryElements);
 
-                        
+                        handleCheckTarget(newElement);
+
                     }).catch(error => {
                         //setIsLoading(false);  // Set loading to false in case of an error
                         console.error("Error while getting element product:", error);

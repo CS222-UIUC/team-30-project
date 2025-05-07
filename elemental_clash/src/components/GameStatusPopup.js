@@ -35,7 +35,8 @@ const GameStatusPopup = ({ status, onClose }) => {
                         padding: '8px 16px',
                         color: 'white',
                         borderRadius: '6px',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        userSelect: 'none'
                     }}
                 >
                     Close
