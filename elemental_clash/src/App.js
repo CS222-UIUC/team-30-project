@@ -72,6 +72,7 @@ function App() {
         color: '#fff',
         borderRadius: '8px',
         zIndex: 100,
+        userSelect: 'none'
       }}>
       Your goal: {targetElement}
       </div>

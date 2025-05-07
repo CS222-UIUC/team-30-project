@@ -363,19 +363,19 @@ const GameStateComponent = ( { handleGenerateTarget, handleChangeTarget, targetR
       <h1 style = {{userSelect: 'none'}}>Game Info</h1>
       <p style = {{userSelect: 'none', marginTop:'-1.5vh'}}>You are player: {playerNumber} </p>
         <p onChange={handleCreateGameNameChange} style={{marginTop:'-.75vh', color:'white'}} >{currGameName === '' ? 'Create/Join a game...' : currGameName}</p>
-        <div style={{ height: '2px', backgroundColor: '#ccc', width: '80%', transform:'translateY(-400%)' }} />
+        <div style={{ height: '2px', backgroundColor: '#ccc', width: '80%', transform:'translateY(-400%)', userSelect: 'none' }}/>
         {/* <button onClick={handleCreateGameNameSubmit} style = {{userSelect: 'none'}}> Create Game </button> */}
         {
           currGameName === '' ? (
-            <StyledButton variant='outline-hover-button' label='Create Game' onClick={handleCreateGameNameSubmit} style={{width:'15vw', '--custom-bg': 'rgb(9, 140, 134) ', transform: 'translateY(-25%)'}}></StyledButton>
+            <StyledButton variant='outline-hover-button' label='Create Game' onClick={handleCreateGameNameSubmit} style={{width:'15vw', '--custom-bg': 'rgb(9, 140, 134) ', transform: 'translateY(-25%)', userSelect: 'none'}}></StyledButton>
           ) : (
-            <StyledButton variant='outline-hover-button' label='Copy Code' onClick={copyGameNameToClipboard} style={{width:'15vw', '--custom-bg': 'rgb(9, 140, 134) ', transform: 'translateY(-25%)'}}></StyledButton>
+            <StyledButton variant='outline-hover-button' label='Copy Code' onClick={copyGameNameToClipboard} style={{width:'15vw', '--custom-bg': 'rgb(9, 140, 134) ', transform: 'translateY(-25%)', userSelect: 'none'}}></StyledButton>
           )
         }
-        <input type="text" placeholder='Enter a game code!' value={joinGameName} onChange={handleJoinGameNameChange} style={{textAlign: 'center', background: 'none', border:'none', color: 'white', fontSize: '1rem', marginTop: '-10px'}}/>
+        <input type="text" placeholder='Enter a game code!' value={joinGameName} onChange={handleJoinGameNameChange} style={{textAlign: 'center', background: 'none', border:'none', color: 'white', fontSize: '1rem', marginTop: '-10px', userSelect: 'none'}}/>
         <div style={{ height: '2px', backgroundColor: '#ccc', width: '80%', marginTop:'-.7rem' }} />
 
-        <StyledButton variant='outline-hover-button' label='Join Game' onClick={handleJoinGameNameSubmit} style={{width:'15vw', '--custom-bg': 'rgb(9, 140, 134) '}}></StyledButton>
+        <StyledButton variant='outline-hover-button' label='Join Game' onClick={handleJoinGameNameSubmit} style={{width:'15vw', '--custom-bg': 'rgb(9, 140, 134) ', userSelect: 'none'}}></StyledButton>
     </div>
   )
 }
