@@ -57,14 +57,14 @@ function App() {
   );
   */
  return (
-  <div className="App" style={{display: "flex", flexDirection: "row"}}>
+  <div className="App" style={{display: "flex", flexDirection: "row", background: '#c3c3c3' }}>
   {/*<Button style={{ marginLeft: '10px' }} text="Element" onClick={handleButtonClick} /> */}
     <div style={{flex: 2}}>
       <GameScreen handleCheckTarget={handleCheckTarget} resetElements={resetElements} setResetElements={setResetElements}/>
     </div>
     {targetElement && (<div style={{
         position: 'absolute',
-        bottom: '50px',
+        bottom: '90px',
         left: '50vw',
         translate: '-50%',
         padding: '8px 12px',
@@ -73,7 +73,7 @@ function App() {
         borderRadius: '8px',
         zIndex: 100,
       }}>
-      {targetElement}
+      Your goal: {targetElement}
       </div>
       )}
     <div style={{flex: 1}}>
