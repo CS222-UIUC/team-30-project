@@ -79,13 +79,15 @@ const Element = forwardRef(( { text, id, position, onDragStop, inventory }, ref 
         borderColor: '#ccc',
         backgroundColor: '#f0f0f0',
         color: '#333',
-        fontSize: '16px',
+        fontSize: dragging ? '16.25px' : '16px',
         textAlign: 'center',
+        zIndex: dragging ? 50 : 1,
         cursor: dragging ? 'grabbing' : 'grab', //styling
         transition: dragging ? 'none' : 'transform .3s ease', //avoid goofy ah teleporting
         width: 'fit-content', //keeps the inventory elements from filling their columns
         userSelect: 'none', //don't let them highlight text
         WebkitUserSelect: 'none', //mobile support, not that we use that right now...
+        boxShadow: dragging ? '2px 2px 2px rgba(0,0,0,.3)' : '',
     };
 
     return (

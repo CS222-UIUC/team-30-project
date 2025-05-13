@@ -14,7 +14,7 @@ function App() {
   const [resetElements, setResetElements] = React.useState(false);
 
   const handleGenerateTarget = (gameName) => {
-    setTargetElement(getRandomElement(gameName));
+    getRandomElement(gameName);
   }
 
   const handleChangeTarget = (newTargetName) => {
