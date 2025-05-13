@@ -120,7 +120,10 @@ const GameStateComponent = ( { handleGenerateTarget, handleChangeTarget, targetR
         // console.log(payload)
         // setShowPopup(true)
 
-
+        if (playerNumber === 1 && payload.new['player_2'] && payload.new['winning_player'] === null) {
+          shouldResetElements();
+          handleChangeTarget(payload.new['target_element']);
+        }
         if (payload.new['winning_player'] != null) {
           if (payload.new['winning_player'] == playerNumber) {
             setGameOver(1);
