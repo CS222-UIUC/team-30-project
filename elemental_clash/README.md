@@ -1,3 +1,14 @@
+
+
+
+# Elemental Clash
+Elemental Clash is a multiplayer game based off of Infinite Craft and Little Alchemy where you can combine different elements to create new elements in a sandbox mode. What is different from these games is our competitive aspect, making the game a multiplayer style where players compete to reach a target element first. We also added an AI component which generates a never before seen element if the element a player creates is not already in the database.
+
+# Tech Stack
+Frontend: ReactJS, CSS
+Backend: Supabase (PostGreSQL), Supabase Realtime
+APIs: Gemini
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,3 +79,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Team Roles
+Jonah Tran: Full stack developer (focused on connecting and maintaining supabase)
+Alexander Lauinger: Full stack developer (focused on integrating gemini API)
+Michael Zayed: Full stack developer (focused on connecting and maintaining supabase)
+Connor Koefelda: Full stack developer (focused on GUI)
