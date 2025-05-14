@@ -84,6 +84,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 # Team Roles
 Jonah Tran: Full stack developer (focused on connecting and maintaining supabase)
+
 Alexander Lauinger: Full stack developer (focused on integrating gemini API)
+
 Michael Zayed: Full stack developer (focused on connecting and maintaining supabase)
+
 Connor Koefelda: Full stack developer (focused on GUI)
