@@ -6,7 +6,9 @@ Elemental Clash is a multiplayer game based off of Infinite Craft and Little Alc
 
 # Tech Stack
 Frontend: ReactJS, CSS
+
 Backend: Supabase (PostGreSQL), Supabase Realtime
+
 APIs: Gemini
 
 # Getting Started with Create React App
